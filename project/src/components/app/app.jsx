@@ -1,14 +1,17 @@
 import React from 'react';
 import Main from '../main';
+import PropTypes from 'prop-types';
 
-import './app.css';
-
-function App() {
+function App({places, quantityOffers}) {
   return (
-    <div className="city-app">
-      <Main placesQuantity />
+    <div>
+      <Main places={places} quantityOffers={quantityOffers} />
     </div>
   );
 }
+App.propTypes = {
+  places: PropTypes.array.isRequired,
+  quantityOffers: PropTypes.number.isRequired,
+};
 
 export default App;

@@ -1,3 +1,3 @@
-import PlaceCard from './place-card';
+import PlaceCard from './PlaceCard';
 
 export default PlaceCard;
