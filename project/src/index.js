@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/app';
 
 const Setting = {
-  QUANTITY_OFFERS: 312,
+  OFFERS_QUANTITY: 312,
   PLACES: [
     {
       name: 'Beautiful & luxurious apartment at great location',
@@ -36,7 +36,7 @@ const Setting = {
       photo: '03',
     },
     {
-      name: 'Wood and stone place',
+      name: 'Wood place',
       price: 80,
       duration: 'night',
       type: 'Private room',
@@ -47,7 +47,7 @@ const Setting = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App places={Setting.PLACES} quantityOffers={Setting.QUANTITY_OFFERS} />
+    <App places={Setting.PLACES} offersQuantity={Setting.OFFERS_QUANTITY} />
   </React.StrictMode>,
   document.getElementById('root'),
 );

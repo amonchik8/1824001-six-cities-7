@@ -48,7 +48,7 @@ function PlaceCard({ name, mark, price, duration, type, photo }) {
 }
 PlaceCard.propTypes = {
   name: PropTypes.string.isRequired,
-  mark: PropTypes.string.isRequired,
+  mark: PropTypes.string,
   price: PropTypes.number.isRequired,
   duration: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
