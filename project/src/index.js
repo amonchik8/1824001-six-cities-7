@@ -4,6 +4,14 @@ import App from './components/app';
 
 const Setting = {
   OFFERS_QUANTITY: 312,
+  LOCATIONS: [
+    'Paris',
+    'Cologne',
+    'Brussels',
+    'Amsterdam',
+    'Hamburg',
+    'Dusseldorf',
+  ],
   PLACES: [
     {
       name: 'Beautiful & luxurious apartment at great location',
@@ -47,7 +55,11 @@ const Setting = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App places={Setting.PLACES} offersQuantity={Setting.OFFERS_QUANTITY} />
+    <App
+      places={Setting.PLACES}
+      offersQuantity={Setting.OFFERS_QUANTITY}
+      locations={Setting.LOCATIONS}
+    />
   </React.StrictMode>,
   document.getElementById('root'),
 );
