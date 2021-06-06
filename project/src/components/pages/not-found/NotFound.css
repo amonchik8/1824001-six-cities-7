@@ -1,0 +1,13 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  background-color: darkgrey;
+}
+.title {
+  padding-top: 100px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
