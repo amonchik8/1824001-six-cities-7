@@ -1,13 +1,14 @@
 import React from 'react';
 import Main from '../main';
-import PropTypes from 'prop-types';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import SignIn from '../pages/sign-in/SignIn';
 import Chosen from '../pages/chosen/Chosen';
 import Room from '../pages/room/Room';
 import NotFound from '../pages/not-found/NotFound';
 import { AppRoute } from '../../const';
-// import placesType from '../../types';
+import PropTypes from 'prop-types';
+
+import { placesType, locationsType, offersQuantityType } from '../../types';
 
 function App({ places, offersQuantity, locations }) {
   return (
@@ -39,18 +40,9 @@ function App({ places, offersQuantity, locations }) {
   );
 }
 App.propTypes = {
-  offersQuantity: PropTypes.number.isRequired,
-  locations: PropTypes.arrayOf(PropTypes.string).isRequired,
-  places: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      mark: PropTypes.string,
-      price: PropTypes.number,
-      duration: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      photo: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  offersQuantity: offersQuantityType,
+  locations: locationsType,
+  places: PropTypes.arrayOf(placesType),
 };
 
 export default App;

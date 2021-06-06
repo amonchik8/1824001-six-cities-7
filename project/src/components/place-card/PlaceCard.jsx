@@ -1,13 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { placesType } from '../../types';
 
 function PlaceCard({ name, mark, price, duration, type, photo }) {
   return (
     <article className="cities__place-card place-card">
-      {mark &&(
+      {mark && (
         <div className="place-card__mark">
           <span>{mark}</span>
-        </div>)}
+        </div>
+      )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/#">
           <img
@@ -23,7 +24,9 @@ function PlaceCard({ name, mark, price, duration, type, photo }) {
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;{duration}</span>
+            <span className="place-card__price-text">
+              &#47;&nbsp;{duration}
+            </span>
           </div>
           <button className="place-card__bookmark-button button" type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -46,13 +49,6 @@ function PlaceCard({ name, mark, price, duration, type, photo }) {
     </article>
   );
 }
-PlaceCard.propTypes = {
-  name: PropTypes.string.isRequired,
-  mark: PropTypes.string,
-  price: PropTypes.number.isRequired,
-  duration: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  photo: PropTypes.string.isRequired,
-};
+PlaceCard.propTypes = placesType.isRequired;
 
 export default PlaceCard;

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { locationNameType } from '../../types';
 
 function Location({ locationName }) {
   return (
@@ -13,6 +13,4 @@ function Location({ locationName }) {
 
 export default Location;
 
-Location.propTypes = {
-  locationName: PropTypes.string.isRequired,
-};
+Location.propTypes = locationNameType;

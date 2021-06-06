@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Location from '../location';
+import { locationsType } from '../../types';
 
 function Locations({ locations }) {
   return (
@@ -14,6 +14,4 @@ function Locations({ locations }) {
 
 export default Locations;
 
-Locations.propTypes = {
-  locations: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
+Locations.propTypes = locationsType;
