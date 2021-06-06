@@ -58,15 +58,15 @@ function Main({ places, offersQuantity, locations }) {
                   </ul>
                 </form>
                 <div className="cities__places-list places__list tabs__content">
-                  {places.map((item, idx) => (
+                  {places.map((item) => (
                     <PlaceCard
-                      key={places[idx].name}
-                      name={places[idx].name}
-                      mark={places[idx].mark}
-                      price={places[idx].price}
-                      duration={places[idx].duration}
-                      type={places[idx].type}
-                      photo={places[idx].photo}
+                      key={item.name}
+                      name={item.name}
+                      mark={item.mark}
+                      price={item.price}
+                      duration={item.duration}
+                      type={item.type}
+                      photo={item.photo}
                     />
                   ))}
                 </div>

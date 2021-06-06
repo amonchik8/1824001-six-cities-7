@@ -7,6 +7,7 @@ import Chosen from '../pages/chosen/Chosen';
 import Room from '../pages/room/Room';
 import NotFound from '../pages/not-found/NotFound';
 import { AppRoute } from '../../const';
+// import placesType from '../../types';
 
 function App({ places, offersQuantity, locations }) {
   return (

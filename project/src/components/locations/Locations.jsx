@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Location from '../location';
 
-function Locations({ locations, locationName }) {
+function Locations({ locations }) {
   return (
     <ul className="locations__list tabs__list">
-      {locations.map((item, idx) => (
-        <Location key={locationName} locationName={locations[idx]} />
+      {locations.map((item) => (
+        <Location key={item} locationName={item} />
       ))}
     </ul>
   );
@@ -16,5 +16,4 @@ export default Locations;
 
 Locations.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.string).isRequired,
-  locationName: PropTypes.string.isRequired,
 };
