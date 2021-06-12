@@ -6,11 +6,10 @@ export const locationsType = PropTypes.arrayOf(PropTypes.string).isRequired;
 
 export const locationNameType = PropTypes.string.isRequired;
 
-export const placesType = PropTypes.shape({
-  name: PropTypes.string.isRequired,
-  mark: PropTypes.string,
+export const hotelsType = PropTypes.shape({
+  title: PropTypes.string.isRequired,
+  isPremium: PropTypes.bool,
   price: PropTypes.number.isRequired,
-  duration: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  photo: PropTypes.string.isRequired,
+  previewImage: PropTypes.string.isRequired,
 });

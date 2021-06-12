@@ -1,23 +1,23 @@
 import React from 'react';
-import Main from '../main';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import Main from '../main';
 import SignIn from '../pages/sign-in/SignIn';
 import Chosen from '../pages/chosen/Chosen';
 import Room from '../pages/room/Room';
 import NotFound from '../pages/not-found/NotFound';
-import { AppRoute } from '../../const';
 import PropTypes from 'prop-types';
 
-import { placesType, locationsType, offersQuantityType } from '../../types';
+import { hotelsType, locationsType, offersQuantityType } from '../../types';
 
-function App({ places, offersQuantity, locations }) {
+function App({ hotels, offersQuantity, locations }) {
   return (
     <div>
       <BrowserRouter>
         <Switch>
           <Route path={AppRoute.MAIN} exact>
             <Main
-              places={places}
+              hotels={hotels}
               offersQuantity={offersQuantity}
               locations={locations}
             />
@@ -26,7 +26,7 @@ function App({ places, offersQuantity, locations }) {
             <SignIn />
           </Route>
           <Route path={AppRoute.FAVORITES} exact>
-            <Chosen />
+            <Chosen hotels={hotels} />
           </Route>
           <Route path={AppRoute.ROOM} exact>
             <Room />
@@ -42,7 +42,7 @@ function App({ places, offersQuantity, locations }) {
 App.propTypes = {
   offersQuantity: offersQuantityType,
   locations: locationsType,
-  places: PropTypes.arrayOf(placesType),
+  hotels: PropTypes.arrayOf(hotelsType),
 };
 
 export default App;

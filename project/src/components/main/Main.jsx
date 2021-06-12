@@ -1,12 +1,12 @@
 import React from 'react';
-import PlaceCard from '../place-card/PlaceCard';
+import { locationsType, offersQuantityType } from '../../types';
 import Header from '../header/Header';
 import Locations from '../locations/Locations';
+import PlaceCardList from '../place-card-list';
+import { hotelsType } from '../../types';
 import PropTypes from 'prop-types';
 
-import { placesType, locationsType, offersQuantityType } from '../../types';
-
-function Main({ places, offersQuantity, locations }) {
+function Main({ offersQuantity, locations, hotels }) {
   return (
     <>
       <div className="page page--gray page--main">
@@ -59,19 +59,7 @@ function Main({ places, offersQuantity, locations }) {
                     </li>
                   </ul>
                 </form>
-                <div className="cities__places-list places__list tabs__content">
-                  {places.map((item) => (
-                    <PlaceCard
-                      key={item.name}
-                      name={item.name}
-                      mark={item.mark}
-                      price={item.price}
-                      duration={item.duration}
-                      type={item.type}
-                      photo={item.photo}
-                    />
-                  ))}
-                </div>
+                <PlaceCardList hotels={hotels} />
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map"></section>
@@ -108,6 +96,6 @@ function Main({ places, offersQuantity, locations }) {
 Main.propTypes = {
   offersQuantity: offersQuantityType,
   locations: locationsType,
-  places: PropTypes.arrayOf(placesType),
+  hotels: PropTypes.arrayOf(hotelsType),
 };
 export default Main;
