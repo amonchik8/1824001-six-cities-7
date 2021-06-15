@@ -150,7 +150,7 @@ export const HOTELS = [
       isPro: true,
       name: 'Angelina',
     },
-    id: 3,
+    id: 4,
     images: ['img/1.png', 'img/2.png'],
     isFavorite: false,
     isPremium: false,

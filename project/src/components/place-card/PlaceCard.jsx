@@ -2,9 +2,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { hotelsType } from '../../types';
 
-function PlaceCard({ title, isPremium, price, type, previewImage, id }) {
+function PlaceCard({
+  title,
+  isPremium,
+  price,
+  type,
+  previewImage,
+  id,
+  setActiveCard,
+}) {
   return (
-    <article className="cities__place-card place-card">
+    <article
+      className="cities__place-card place-card"
+      onMouseEnter={(e) => {
+        const idCard = e.currentTarget.id;
+        setActiveCard(idCard);
+      }}
+      id={id}
+    >
       {isPremium && (
         <div className="place-card__mark">
           <span>{isPremium && 'Premium'}</span>
