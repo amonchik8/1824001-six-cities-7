@@ -10,7 +10,7 @@ function PlaceCardList({ hotels }) {
     <div className="cities__places-list places__list tabs__content">
       {hotels.map((item) => (
         <PlaceCard
-          key={item.title}
+          key={item.id}
           title={item.title}
           isPremium={item.isPremium}
           price={item.price}

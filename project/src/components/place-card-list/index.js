@@ -1,3 +1,1 @@
-import PlaceCardList from './PlaceCardList';
-
-export default PlaceCardList;
+export { default } from './PlaceCardList';

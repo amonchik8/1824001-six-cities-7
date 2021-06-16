@@ -14,11 +14,9 @@ function PlaceCard({
   return (
     <article
       className="cities__place-card place-card"
-      onMouseEnter={(e) => {
-        const idCard = e.currentTarget.id;
-        setActiveCard(idCard);
+      onMouseEnter={() => {
+        setActiveCard(id);
       }}
-      id={id}
     >
       {isPremium && (
         <div className="place-card__mark">

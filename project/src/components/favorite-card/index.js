@@ -1,3 +1,1 @@
-import FavoriteCard from './FavoriteCard';
-
-export default FavoriteCard;
+export { default } from './FavoriteCard';

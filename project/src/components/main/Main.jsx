@@ -5,6 +5,7 @@ import Locations from '../locations/Locations';
 import PlaceCardList from '../place-card-list';
 import { hotelsType } from '../../types';
 import PropTypes from 'prop-types';
+import Map from '../map/Map';
 
 function Main({ offersQuantity, locations, hotels }) {
   return (
@@ -62,7 +63,9 @@ function Main({ offersQuantity, locations, hotels }) {
                 <PlaceCardList hotels={hotels} />
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <section className="cities__map map">
+                  <Map hotels={hotels} />
+                </section>
               </div>
             </div>
           </div>
