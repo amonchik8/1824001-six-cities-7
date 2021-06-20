@@ -161,7 +161,7 @@ export const HOTELS = [
     maxAdults: 4,
     previewImage: '04.jpg',
     price: 132,
-    rating: 4,
+    rating: 3,
     title: 'Canal View Prinsengracht',
     type: 'Apartment',
   },

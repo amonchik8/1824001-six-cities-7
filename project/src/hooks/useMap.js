@@ -3,6 +3,7 @@ import leaflet from 'leaflet';
 
 function useMap(mapRef, hotels) {
   const [map, setMap] = useState(null);
+
   useEffect(() => {
     if (mapRef.current !== null && map === null) {
       const instance = leaflet.map(mapRef.current, {
@@ -24,20 +25,6 @@ function useMap(mapRef, hotels) {
         .addTo(instance);
 
       setMap(instance);
-      const icon = leaflet.icon({
-        iconUrl: 'img/pin.svg',
-        iconSize: [30, 30],
-        iconAnchor: [15, 30],
-      });
-
-      const offerCords = hotels.map((item) => [
-        `${item.location.latitude}`,
-        `${item.location.longitude}`,
-      ]);
-
-      for (let i = 0; i < offerCords.length; i++) {
-        leaflet.marker(offerCords[i], { icon }).addTo(instance);
-      }
     }
   }, [mapRef, map, hotels]);
 
