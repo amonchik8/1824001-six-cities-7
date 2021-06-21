@@ -9,23 +9,32 @@ function PlaceCard({
   type,
   previewImage,
   id,
-  setActiveCard,
+  rating,
+  listItemHoverHandler = () => {},
 }) {
   return (
     <article
-      className="cities__place-card place-card"
-      onMouseEnter={(e) => {
-        const idCard = e.currentTarget.id;
-        setActiveCard(idCard);
+      className={`${
+        window.location.pathname === '/favorites'
+          ? 'favorites__card'
+          : 'cities__place-card'
+      } place-card`}
+      onMouseEnter={() => {
+        listItemHoverHandler(id);
       }}
-      id={id}
     >
       {isPremium && (
         <div className="place-card__mark">
           <span>{isPremium && 'Premium'}</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div
+        className={`${
+          window.location.pathname === '/favorites'
+            ? 'favorites__image-wrapper'
+            : 'cities__image-wrapper'
+        } place-card__image-wrapper`}
+      >
         <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
@@ -36,7 +45,13 @@ function PlaceCard({
           />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div
+        className={`${
+          window.location.pathname === '/favorites'
+            ? 'favorites__card-info'
+            : ''
+        } place-card__info`}
+      >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -51,7 +66,7 @@ function PlaceCard({
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
+            <span style={{ width: `calc(${Math.round(rating) * 20}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from '../../header';
-import { Link } from 'react-router-dom';
-import Logo from '../../logo';
-import { hotelsType } from '../../../types';
 import PropTypes from 'prop-types';
-import FavoriteCard from '../../favorite-card';
+import { Link } from 'react-router-dom';
+import { hotelsType } from '../../../types';
+import Header from '../../header';
+import Logo from '../../logo';
+import PlaceCard from '../../place-card';
 
 function Chosen({ hotels }) {
   return (
@@ -27,13 +27,14 @@ function Chosen({ hotels }) {
                   <div className="favorites__places">
                     {hotels.map((item) =>
                       item.city.name === 'Amsterdam' ? (
-                        <FavoriteCard
+                        <PlaceCard
                           key={item.id}
                           title={item.title}
                           isPremium={item.isPremium}
                           price={item.price}
                           type={item.type}
                           previewImage={item.previewImage}
+                          id={item.id}
                         />
                       ) : null,
                     )}
@@ -50,7 +51,7 @@ function Chosen({ hotels }) {
                   <div className="favorites__places">
                     {hotels.map((item) =>
                       item.city.name === 'Cologne' ? (
-                        <FavoriteCard
+                        <PlaceCard
                           key={item.id}
                           title={item.title}
                           isPremium={item.isPremium}
