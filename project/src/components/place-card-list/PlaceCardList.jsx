@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { hotelsType } from '../../types';
+import { PlaceClass, placeCardClass } from '../../const';
 import PlaceCard from '../place-card/PlaceCard';
 
-function PlaceCardList({ hotels, onListItemHover }) {
-  const listItemHoverHandler = (id) => {
-    onListItemHover(id);
-  };
+function PlaceCardList({ hotels, onListItemHover = () => {}, type }) {
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={`${placeCardClass[type].type}__places-list places__list tabs__content`}>
       {hotels.map((item) => (
         <PlaceCard
           key={item.id}
@@ -19,7 +17,8 @@ function PlaceCardList({ hotels, onListItemHover }) {
           previewImage={item.previewImage}
           id={item.id}
           rating={item.rating}
-          listItemHoverHandler={listItemHoverHandler}
+          placeClass={PlaceClass[type]}
+          listItemHoverHandler={(id) => onListItemHover(id)}
         />
       ))}
     </div>
@@ -28,6 +27,7 @@ function PlaceCardList({ hotels, onListItemHover }) {
 PlaceCardList.propTypes = {
   hotels: PropTypes.arrayOf(hotelsType),
   onListItemHover: PropTypes.func,
+  type: PropTypes.string,
 };
 
 export default PlaceCardList;

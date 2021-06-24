@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { locationsType, offersQuantityType } from '../../types';
-import { hotelsType } from '../../types';
+import { PlaceClass } from '../../const';
+import { locationsType, offersQuantityType, hotelsType } from '../../types';
 import Header from '../header/Header';
 import Locations from '../locations/Locations';
 import PlaceCardList from '../place-card-list';
@@ -12,7 +12,9 @@ function Main({ offersQuantity, locations, hotels }) {
 
   const onListItemHover = (id) => {
     const currentHotel = hotels.find((hotel) => hotel.id === id);
-    setSelectedPoint(currentHotel);
+    if (currentHotel) {
+      setSelectedPoint(currentHotel);
+    }
   };
 
   return (
@@ -67,10 +69,13 @@ function Main({ offersQuantity, locations, hotels }) {
                     </li>
                   </ul>
                 </form>
-                <PlaceCardList
-                  hotels={hotels}
-                  onListItemHover={onListItemHover}
-                />
+                <div className="main__places">
+                  <PlaceCardList
+                    hotels={hotels}
+                    type={PlaceClass.MAIN}
+                    onListItemHover={onListItemHover}
+                  />
+                </div>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">

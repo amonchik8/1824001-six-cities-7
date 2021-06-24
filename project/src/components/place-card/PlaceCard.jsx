@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { hotelsType } from '../../types';
+import { placeCardClass } from '../../const';
 
 function PlaceCard({
   title,
@@ -10,15 +11,13 @@ function PlaceCard({
   previewImage,
   id,
   rating,
+  placeClass,
+  isFavorites,
   listItemHoverHandler = () => {},
 }) {
   return (
     <article
-      className={`${
-        window.location.pathname === '/favorites'
-          ? 'favorites__card'
-          : 'cities__place-card'
-      } place-card`}
+      className={placeCardClass[placeClass].className}
       onMouseEnter={() => {
         listItemHoverHandler(id);
       }}
@@ -29,35 +28,29 @@ function PlaceCard({
         </div>
       )}
       <div
-        className={`${
-          window.location.pathname === '/favorites'
-            ? 'favorites__image-wrapper'
-            : 'cities__image-wrapper'
-        } place-card__image-wrapper`}
+        className={`${placeCardClass[placeClass].type}__image-wrapper place-card__image-wrapper`}
       >
         <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
             src={`img/apartment-${previewImage}`}
-            width="260"
-            height="200"
+            width={placeCardClass[placeClass].width}
+            height={placeCardClass[placeClass].width}
             alt="Place"
           />
         </Link>
       </div>
-      <div
-        className={`${
-          window.location.pathname === '/favorites'
-            ? 'favorites__card-info'
-            : ''
-        } place-card__info`}
-      >
+      <div className={placeCardClass[placeClass].classNameInfo}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button
+            className={`place-card__bookmark-button button ${
+              isFavorites ? ' place-card__bookmark-button--active' : ''
+            }`}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

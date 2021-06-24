@@ -1,16 +1,20 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import PropTypes from 'prop-types';
+import { AppRoute, PlaceClass } from '../../const';
 import Main from '../main';
 import SignIn from '../pages/sign-in/SignIn';
 import Chosen from '../pages/chosen/Chosen';
 import Room from '../pages/room/Room';
 import NotFound from '../pages/not-found/NotFound';
-import PropTypes from 'prop-types';
+import {
+  hotelsType,
+  locationsType,
+  offersQuantityType,
+  reviewsType
+} from '../../types';
 
-import { hotelsType, locationsType, offersQuantityType } from '../../types';
-
-function App({ hotels, offersQuantity, locations }) {
+function App({ hotels, offersQuantity, locations, reviews }) {
   return (
     <div>
       <BrowserRouter>
@@ -29,7 +33,7 @@ function App({ hotels, offersQuantity, locations }) {
             <Chosen hotels={hotels} />
           </Route>
           <Route path={AppRoute.ROOM} exact>
-            <Room />
+            <Room reviews={reviews} hotels={hotels} type={PlaceClass.NEAR_PLACES}/>
           </Route>
           <Route>
             <NotFound />
@@ -43,6 +47,7 @@ App.propTypes = {
   offersQuantity: offersQuantityType,
   locations: locationsType,
   hotels: PropTypes.arrayOf(hotelsType),
+  reviews: PropTypes.arrayOf(reviewsType),
 };
 
 export default App;
