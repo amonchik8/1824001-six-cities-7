@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { PlaceClass } from '../../../const';
 import { hotelsType } from '../../../types';
 import Header from '../../header';
 import Logo from '../../logo';
-import PlaceCard from '../../place-card';
+import PlaceCardList from '../../place-card-list';
 
 function Chosen({ hotels }) {
   return (
@@ -25,19 +26,10 @@ function Chosen({ hotels }) {
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {hotels.map((item) =>
-                      item.city.name === 'Amsterdam' ? (
-                        <PlaceCard
-                          key={item.id}
-                          title={item.title}
-                          isPremium={item.isPremium}
-                          price={item.price}
-                          type={item.type}
-                          previewImage={item.previewImage}
-                          id={item.id}
-                        />
-                      ) : null,
-                    )}
+                    <PlaceCardList
+                      hotels={hotels}
+                      type={PlaceClass.FAVORITES}
+                    />
                   </div>
                 </li>
                 <li className="favorites__locations-items">
@@ -48,20 +40,7 @@ function Chosen({ hotels }) {
                       </a>
                     </div>
                   </div>
-                  <div className="favorites__places">
-                    {hotels.map((item) =>
-                      item.city.name === 'Cologne' ? (
-                        <PlaceCard
-                          key={item.id}
-                          title={item.title}
-                          isPremium={item.isPremium}
-                          price={item.price}
-                          type={item.type}
-                          previewImage={item.previewImage}
-                        />
-                      ) : null,
-                    )}
-                  </div>
+                  <div className="favorites__places"></div>
                 </li>
               </ul>
             </section>

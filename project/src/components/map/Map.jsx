@@ -30,7 +30,7 @@ function Map({ hotels, selectedPoint }) {
               lng: hotel.location.longitude,
             },
             {
-              icon: hotel.id === selectedPoint.id ? iconActive : iconDefault,
+              icon: hotel?.id === selectedPoint?.id ? iconActive : iconDefault,
             },
           )
           .addTo(map);

@@ -110,7 +110,7 @@ export const HOTELS = [
     },
     id: 3,
     images: ['img/1.png', 'img/2.png'],
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     location: {
       latitude: 52.3909553943508,
