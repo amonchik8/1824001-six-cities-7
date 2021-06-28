@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap';
-import { hotelsType } from '../../types';
+import { offersType } from '../../types';
 
-function Map({ hotels, selectedPoint }) {
+function Map({ offers, selectedPoint }) {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, hotels);
+  const map = useMap(mapRef, offers);
 
   const iconDefault = leaflet.icon({
     iconUrl: 'img/pin.svg',
@@ -22,7 +22,7 @@ function Map({ hotels, selectedPoint }) {
 
   useEffect(() => {
     if (map) {
-      hotels.forEach((hotel) => {
+      offers.forEach((hotel) => {
         leaflet
           .marker(
             {
@@ -36,12 +36,12 @@ function Map({ hotels, selectedPoint }) {
           .addTo(map);
       });
     }
-  }, [map, hotels, selectedPoint, iconDefault, iconActive]);
+  }, [map, offers, selectedPoint, iconDefault, iconActive]);
 
   return <div id="map" style={{ height: '100%' }} ref={mapRef}></div>;
 }
 Map.propTypes = {
-  hotels: PropTypes.arrayOf(hotelsType),
+  offers: PropTypes.arrayOf(offersType),
   selectedPoint: PropTypes.object,
 };
 

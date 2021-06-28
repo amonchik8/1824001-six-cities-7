@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { hotelsType } from '../../types';
+import { offersType } from '../../types';
 import { placeCardClass } from '../../const';
 
 function PlaceCard({
@@ -71,6 +71,6 @@ function PlaceCard({
     </article>
   );
 }
-PlaceCard.propTypes = hotelsType.isRequired;
+PlaceCard.propTypes = offersType.isRequired;
 
 export default PlaceCard;

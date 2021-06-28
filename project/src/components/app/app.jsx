@@ -7,33 +7,28 @@ import SignIn from '../pages/sign-in/SignIn';
 import Chosen from '../pages/chosen/Chosen';
 import Room from '../pages/room/Room';
 import NotFound from '../pages/not-found/NotFound';
-import {
-  hotelsType,
-  locationsType,
-  offersQuantityType,
-  reviewsType
-} from '../../types';
+import { offersType, offersQuantityType, reviewsType } from '../../types';
 
-function App({ hotels, offersQuantity, locations, reviews }) {
+function App({ offers, offersQuantity, reviews }) {
   return (
     <div>
       <BrowserRouter>
         <Switch>
           <Route path={AppRoute.MAIN} exact>
-            <Main
-              hotels={hotels}
-              offersQuantity={offersQuantity}
-              locations={locations}
-            />
+            <Main offers={offers} offersQuantity={offersQuantity} />
           </Route>
           <Route path={AppRoute.SIGN_IN} exact>
             <SignIn />
           </Route>
           <Route path={AppRoute.FAVORITES} exact>
-            <Chosen hotels={hotels} />
+            <Chosen offers={offers} />
           </Route>
           <Route path={AppRoute.ROOM} exact>
-            <Room reviews={reviews} hotels={hotels} type={PlaceClass.NEAR_PLACES}/>
+            <Room
+              reviews={reviews}
+              offers={offers}
+              type={PlaceClass.NEAR_PLACES}
+            />
           </Route>
           <Route>
             <NotFound />
@@ -45,8 +40,7 @@ function App({ hotels, offersQuantity, locations, reviews }) {
 }
 App.propTypes = {
   offersQuantity: offersQuantityType,
-  locations: locationsType,
-  hotels: PropTypes.arrayOf(hotelsType),
+  offers: PropTypes.arrayOf(offersType),
   reviews: PropTypes.arrayOf(reviewsType),
 };
 

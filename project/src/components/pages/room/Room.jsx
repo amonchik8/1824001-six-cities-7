@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { hotelsType, reviewsType } from '../../../types';
+import { offersType, reviewsType } from '../../../types';
 import { PlaceClass } from '../../../const';
 import PlaceCard from '../../place-card/PlaceCard';
 import Header from '../../header';
@@ -8,19 +8,19 @@ import Form from '../../form';
 import ReviewsList from '../../reviews-list';
 import Map from '../../map/Map';
 
-function Room({ reviews, hotels, type }) {
+function Room({ reviews, offers, type }) {
   const [selectedPoint, setSelectedPoint] = useState({});
   const reviewsCount = reviews.length;
   const onListItemHover = (id) => {
-    const currentHotel = hotels.find((item) => item.id === id);
+    const currentHotel = offers.find((item) => item.id === id);
     if (currentHotel) {
       setSelectedPoint(currentHotel);
     }
   };
-  const hotel = hotels.find(
+  const hotel = offers.find(
     (item) => `/offer/${item.id}` === window.location.pathname,
   );
-  const nearHotels = hotels.filter((item) => item.id !== hotel.id);
+  const nearHotels = offers.filter((item) => item.id !== hotel.id);
   return (
     <div>
       <div className="page">
@@ -175,7 +175,7 @@ function Room({ reviews, hotels, type }) {
               </div>
             </div>
             <section className="property__map map">
-              <Map hotels={nearHotels} selectedPoint={selectedPoint} />
+              <Map offers={nearHotels} selectedPoint={selectedPoint} />
             </section>
           </section>
           <div className="container">
@@ -230,7 +230,7 @@ function Room({ reviews, hotels, type }) {
 
 Room.propTypes = {
   reviews: PropTypes.arrayOf(reviewsType),
-  hotels: PropTypes.arrayOf(hotelsType),
+  offers: PropTypes.arrayOf(offersType),
   type: PropTypes.string,
 };
 

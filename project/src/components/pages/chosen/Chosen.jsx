@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { PlaceClass } from '../../../const';
-import { hotelsType } from '../../../types';
+import { offersType } from '../../../types';
 import Header from '../../header';
 import Logo from '../../logo';
 import PlaceCardList from '../../place-card-list';
 
-function Chosen({ hotels }) {
+function Chosen({ offers }) {
   return (
     <div>
       <div className="page">
@@ -27,7 +27,7 @@ function Chosen({ hotels }) {
                   </div>
                   <div className="favorites__places">
                     <PlaceCardList
-                      hotels={hotels}
+                      offers={offers}
                       type={PlaceClass.FAVORITES}
                     />
                   </div>
@@ -77,7 +77,7 @@ function Chosen({ hotels }) {
   );
 }
 Chosen.propTypes = {
-  hotels: PropTypes.arrayOf(hotelsType),
+  offers: PropTypes.arrayOf(offersType),
 };
 
 export default Chosen;

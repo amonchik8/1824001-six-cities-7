@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import leaflet from 'leaflet';
 
-function useMap(mapRef, hotels) {
+function useMap(mapRef, offers) {
   const [map, setMap] = useState(null);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function useMap(mapRef, hotels) {
 
       setMap(instance);
     }
-  }, [mapRef, map, hotels]);
+  }, [mapRef, map, offers]);
 
   return map;
 }

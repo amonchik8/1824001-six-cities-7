@@ -1,25 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import App from './components/app';
-import { HOTELS } from './mocks/offers';
-import { LOCATIONS } from './mocks/locations';
+import { OFFERS } from './mocks/offers';
 import { REVIEWS } from './mocks/reviews';
+import { reducer } from './store/reducer';
 
 const Setting = {
   OFFERS_QUANTITY: 312,
-  HOTELS,
-  LOCATIONS,
+  OFFERS,
   REVIEWS,
 };
 
+const store = createStore(reducer);
+
 ReactDOM.render(
   <React.StrictMode>
-    <App
-      hotels={Setting.HOTELS}
-      offersQuantity={Setting.OFFERS_QUANTITY}
-      locations={Setting.LOCATIONS}
-      reviews={Setting.REVIEWS}
-    />
+    <Provider store={store}>
+      <App
+        offers={Setting.OFFERS}
+        offersQuantity={Setting.OFFERS_QUANTITY}
+        reviews={Setting.REVIEWS}
+      />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

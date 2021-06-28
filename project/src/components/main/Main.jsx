@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { PlaceClass } from '../../const';
-import { locationsType, offersQuantityType, hotelsType } from '../../types';
+import { offersType } from '../../types';
+import { OFFERS } from '../../mocks/offers';
 import Header from '../header/Header';
-import Locations from '../locations/Locations';
+import LocationList from '../location-list/LocationList';
 import PlaceCardList from '../place-card-list';
 import Map from '../map/Map';
 
-function Main({ offersQuantity, locations, hotels }) {
+function Main({ offers }) {
   const [selectedPoint, setSelectedPoint] = useState({});
 
   const onListItemHover = (id) => {
-    const currentHotel = hotels.find((hotel) => hotel.id === id);
+    const currentHotel = offers.find((offer) => offer.id === id);
     if (currentHotel) {
       setSelectedPoint(currentHotel);
     }
   };
+
+  const [city, setCity] = useState('Paris');
+
+  const offersQuantity = OFFERS.filter(
+    (item) => item.city.name === city).length;
 
   return (
     <>
@@ -25,15 +31,7 @@ function Main({ offersQuantity, locations, hotels }) {
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
             <section className="locations container">
-              <Locations locations={locations} />
-              {/* <li className="locations__item">
-                  <a
-                    className="locations__item-link tabs__item tabs__item--active"
-                    href="/#"
-                  >
-                    <span>Amsterdam</span>
-                  </a>
-                </li> */}
+              <LocationList getCity={(e) => setCity(e)} />
             </section>
           </div>
           <div className="cities">
@@ -41,7 +39,7 @@ function Main({ offersQuantity, locations, hotels }) {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">
-                  {offersQuantity} places to stay in Amsterdam
+                  {offersQuantity} places to stay in {city}
                 </b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
@@ -71,7 +69,8 @@ function Main({ offersQuantity, locations, hotels }) {
                 </form>
                 <div className="main__places">
                   <PlaceCardList
-                    hotels={hotels}
+                    city={city}
+                    offers={offers}
                     type={PlaceClass.MAIN}
                     onListItemHover={onListItemHover}
                   />
@@ -79,7 +78,7 @@ function Main({ offersQuantity, locations, hotels }) {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map hotels={hotels} selectedPoint={selectedPoint} />
+                  <Map offers={offers} selectedPoint={selectedPoint} />
                 </section>
               </div>
             </div>
@@ -112,8 +111,6 @@ function Main({ offersQuantity, locations, hotels }) {
 }
 
 Main.propTypes = {
-  offersQuantity: offersQuantityType,
-  locations: locationsType,
-  hotels: PropTypes.arrayOf(hotelsType),
+  offers: PropTypes.arrayOf(offersType),
 };
 export default Main;
