@@ -1,15 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { PlaceClass } from '../../const';
+import { PlaceClass, SORT_VALUES } from '../../const';
 import { offersType } from '../../types';
 import { OFFERS } from '../../mocks/offers';
 import Header from '../header/Header';
 import LocationList from '../location-list/LocationList';
 import PlaceCardList from '../place-card-list';
+import SortList from '../sort-list';
+
 import Map from '../map/Map';
 
 function Main({ offers }) {
+  const { TOP_RATED_FIRST, PRICE_TO_HIGH, PRICE_TO_LOW, POPULAR } = SORT_VALUES;
+  const [city, setCity] = useState('Paris');
+  const [defaultSort, setDefaultSort] = useState(POPULAR);
   const [selectedPoint, setSelectedPoint] = useState({});
+  const [sortedOffers, setSortedOffers] = useState(offers);
+
+  const offersQuantity = OFFERS.filter(
+    (item) => item.city.name === city).length;
+
+  const sortOffers = (sortValue) => {
+    const sortedByPrice = offers.sort(
+      (firstOffer, secondOffer) => secondOffer.price - firstOffer.price);
+    switch (sortValue) {
+      case PRICE_TO_LOW:
+        return sortedByPrice;
+      case PRICE_TO_HIGH:
+        return sortedByPrice.reverse();
+      case TOP_RATED_FIRST:
+        return offers.sort(
+          (firstOffer, secondOffer) => secondOffer.rating - firstOffer.rating);
+      default:
+        return offers;
+    }
+  };
 
   const onListItemHover = (id) => {
     const currentHotel = offers.find((offer) => offer.id === id);
@@ -18,10 +43,11 @@ function Main({ offers }) {
     }
   };
 
-  const [city, setCity] = useState('Paris');
+  const handleSortClick = (value) => setDefaultSort(value);
 
-  const offersQuantity = OFFERS.filter(
-    (item) => item.city.name === city).length;
+  useEffect(() => {
+    setSortedOffers(sortOffers(defaultSort));
+  }, [defaultSort, sortOffers, sortedOffers]);
 
   return (
     <>
@@ -41,36 +67,14 @@ function Main({ offers }) {
                 <b className="places__found">
                   {offersQuantity} places to stay in {city}
                 </b>
-                <form className="places__sorting" action="#" method="get">
-                  <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex="0">
-                    Popular
-                    <svg className="places__sorting-arrow" width="7" height="4">
-                      <use xlinkHref="#icon-arrow-select"></use>
-                    </svg>
-                  </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    <li
-                      className="places__option places__option--active"
-                      tabIndex="0"
-                    >
-                      Popular
-                    </li>
-                    <li className="places__option" tabIndex="0">
-                      Price: low to high
-                    </li>
-                    <li className="places__option" tabIndex="0">
-                      Price: high to low
-                    </li>
-                    <li className="places__option" tabIndex="0">
-                      Top rated first
-                    </li>
-                  </ul>
-                </form>
+                <SortList
+                  onSortChange={handleSortClick}
+                  defaultSort={defaultSort}
+                />
                 <div className="main__places">
                   <PlaceCardList
                     city={city}
-                    offers={offers}
+                    offers={sortedOffers}
                     type={PlaceClass.MAIN}
                     onListItemHover={onListItemHover}
                   />
@@ -78,7 +82,7 @@ function Main({ offers }) {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map offers={offers} selectedPoint={selectedPoint} />
+                  <Map offers={offers} selectedPoint={selectedPoint} city={city} />
                 </section>
               </div>
             </div>

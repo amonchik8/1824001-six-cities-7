@@ -5,9 +5,9 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap';
 import { offersType } from '../../types';
 
-function Map({ offers, selectedPoint }) {
+function Map({ offers, selectedPoint, city }) {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, offers);
+  const map = useMap(mapRef, offers, city);
 
   const iconDefault = leaflet.icon({
     iconUrl: 'img/pin.svg',
@@ -43,6 +43,7 @@ function Map({ offers, selectedPoint }) {
 Map.propTypes = {
   offers: PropTypes.arrayOf(offersType),
   selectedPoint: PropTypes.object,
+  city: PropTypes.string,
 };
 
 export default Map;
