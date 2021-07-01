@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
 import leaflet from 'leaflet';
+import { CITIES } from '../const';
 
-function useMap(mapRef, offers) {
+function useMap(mapRef, offers, city) {
   const [map, setMap] = useState(null);
+  const location = CITIES.find((item) => item.name === city);
 
   useEffect(() => {
+    const { latitude, longitude, zoom } = location.location;
     if (mapRef.current !== null && map === null) {
       const instance = leaflet.map(mapRef.current, {
         center: {
-          lat: 52.370216,
-          lng: 4.895168,
+          lat: latitude,
+          lng: longitude,
         },
-        zoom: 10,
+        zoom: zoom,
       });
 
       leaflet
@@ -23,10 +26,14 @@ function useMap(mapRef, offers) {
           },
         )
         .addTo(instance);
-
       setMap(instance);
     }
-  }, [mapRef, map, offers]);
+
+    if (map !== null) {
+      map.panTo([latitude, longitude], zoom);
+    }
+
+  }, [mapRef, map, offers, city, location.location]);
 
   return map;
 }

@@ -7,15 +7,15 @@ import SignIn from '../pages/sign-in/SignIn';
 import Chosen from '../pages/chosen/Chosen';
 import Room from '../pages/room/Room';
 import NotFound from '../pages/not-found/NotFound';
-import { offersType, offersQuantityType, reviewsType } from '../../types';
+import { offersType, reviewsType } from '../../types';
 
-function App({ offers, offersQuantity, reviews }) {
+function App({ offers, reviews }) {
   return (
     <div>
       <BrowserRouter>
         <Switch>
           <Route path={AppRoute.MAIN} exact>
-            <Main offers={offers} offersQuantity={offersQuantity} />
+            <Main offers={offers} />
           </Route>
           <Route path={AppRoute.SIGN_IN} exact>
             <SignIn />
@@ -39,7 +39,6 @@ function App({ offers, offersQuantity, reviews }) {
   );
 }
 App.propTypes = {
-  offersQuantity: offersQuantityType,
   offers: PropTypes.arrayOf(offersType),
   reviews: PropTypes.arrayOf(reviewsType),
 };

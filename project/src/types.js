@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
 
-export const offersQuantityType = PropTypes.number.isRequired;
-
 export const offersType = PropTypes.shape({
   title: PropTypes.string.isRequired,
   isPremium: PropTypes.bool,
