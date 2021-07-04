@@ -4,12 +4,13 @@ import { offersType } from '../../types';
 import { PlaceClass, placeCardClass } from '../../const';
 import PlaceCard from '../place-card/PlaceCard';
 
-function PlaceCardList({ offers, city, onListItemHover = () => {}, type }) {
+function PlaceCardList({ offers, city, onListItemHover = () => {}, type, sortType, sortOffers}) {
+
   return (
     <div
       className={`${placeCardClass[type].type}__places-list places__list tabs__content`}
     >
-      {offers.map((item) =>
+      {sortOffers(offers, sortType).map((item) =>
         item.city.name === city ? (
           <PlaceCard
             key={item.id}
@@ -35,6 +36,8 @@ PlaceCardList.propTypes = {
   onListItemHover: PropTypes.func,
   type: PropTypes.string,
   city: PropTypes.string,
+  sortType: PropTypes.string,
+  sortOffers: PropTypes.func,
 };
 
 export default PlaceCardList;

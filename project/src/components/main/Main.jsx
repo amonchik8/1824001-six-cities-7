@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { PlaceClass, SORT_VALUES } from '../../const';
 import { offersType } from '../../types';
@@ -13,15 +13,15 @@ import Map from '../map/Map';
 function Main({ offers }) {
   const { TOP_RATED_FIRST, PRICE_TO_HIGH, PRICE_TO_LOW, POPULAR } = SORT_VALUES;
   const [city, setCity] = useState('Paris');
-  const [defaultSort, setDefaultSort] = useState(POPULAR);
+  const [sortType, setSortType] = useState(POPULAR);
   const [selectedPoint, setSelectedPoint] = useState({});
-  const [sortedOffers, setSortedOffers] = useState(offers);
+  const [sortedOffers] = useState(offers);
 
   const offersQuantity = OFFERS.filter(
     (item) => item.city.name === city).length;
 
-  const sortOffers = (sortValue) => {
-    const sortedByPrice = offers.sort(
+  const sortOffers = (offersList, sortValue) => {
+    const sortedByPrice = offersList.sort(
       (firstOffer, secondOffer) => secondOffer.price - firstOffer.price);
     switch (sortValue) {
       case PRICE_TO_LOW:
@@ -29,10 +29,10 @@ function Main({ offers }) {
       case PRICE_TO_HIGH:
         return sortedByPrice.reverse();
       case TOP_RATED_FIRST:
-        return offers.sort(
+        return offersList.sort(
           (firstOffer, secondOffer) => secondOffer.rating - firstOffer.rating);
       default:
-        return offers;
+        return offersList;
     }
   };
 
@@ -43,11 +43,7 @@ function Main({ offers }) {
     }
   };
 
-  const handleSortClick = (value) => setDefaultSort(value);
-
-  useEffect(() => {
-    setSortedOffers(sortOffers(defaultSort));
-  }, [defaultSort, sortOffers, sortedOffers]);
+  const handleSortClick = (value) => setSortType(value);
 
   return (
     <>
@@ -67,22 +63,25 @@ function Main({ offers }) {
                 <b className="places__found">
                   {offersQuantity} places to stay in {city}
                 </b>
-                <SortList
-                  onSortChange={handleSortClick}
-                  defaultSort={defaultSort}
-                />
+                <SortList onSortChange={handleSortClick} sortType={sortType} />
                 <div className="main__places">
                   <PlaceCardList
                     city={city}
                     offers={sortedOffers}
                     type={PlaceClass.MAIN}
+                    sortType={sortType}
+                    sortOffers={sortOffers}
                     onListItemHover={onListItemHover}
                   />
                 </div>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map offers={offers} selectedPoint={selectedPoint} city={city} />
+                  <Map
+                    offers={offers}
+                    selectedPoint={selectedPoint}
+                    city={city}
+                  />
                 </section>
               </div>
             </div>
