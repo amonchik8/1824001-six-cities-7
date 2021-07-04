@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { PlaceClass, SORT_VALUES } from '../../const';
 import { offersType } from '../../types';
-import { OFFERS } from '../../mocks/offers';
+import { ActionCreator } from '../../store/action';
 import Header from '../header/Header';
 import LocationList from '../location-list/LocationList';
 import PlaceCardList from '../place-card-list';
@@ -10,18 +11,18 @@ import SortList from '../sort-list';
 
 import Map from '../map/Map';
 
-function Main({ offers }) {
+function Main({offers}) {
   const { TOP_RATED_FIRST, PRICE_TO_HIGH, PRICE_TO_LOW, POPULAR } = SORT_VALUES;
   const [city, setCity] = useState('Paris');
   const [sortType, setSortType] = useState(POPULAR);
   const [selectedPoint, setSelectedPoint] = useState({});
   const [sortedOffers] = useState(offers);
 
-  const offersQuantity = OFFERS.filter(
+  const offersQuantity = offers?.filter(
     (item) => item.city.name === city).length;
 
   const sortOffers = (offersList, sortValue) => {
-    const sortedByPrice = offersList.sort(
+    const sortedByPrice = offersList?.sort(
       (firstOffer, secondOffer) => secondOffer.price - firstOffer.price);
     switch (sortValue) {
       case PRICE_TO_LOW:
@@ -113,7 +114,18 @@ function Main({ offers }) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeCity(offers) {
+    dispatch(ActionCreator.loadOffers(offers));
+  },
+});
 Main.propTypes = {
   offers: PropTypes.arrayOf(offersType),
 };
-export default Main;
+export { Main };
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
+

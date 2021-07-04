@@ -91,3 +91,15 @@ export const SORT_VALUES = {
   PRICE_TO_LOW: 'Price: high to low',
   TOP_RATED_FIRST: 'Top rated first',
 };
+
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOW: 'UNKNOW',
+};
+
+export const APIRoute = {
+  OFFERS: '/hotels',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+};

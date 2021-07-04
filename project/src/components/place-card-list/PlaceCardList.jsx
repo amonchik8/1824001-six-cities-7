@@ -10,7 +10,7 @@ function PlaceCardList({ offers, city, onListItemHover = () => {}, type, sortTyp
     <div
       className={`${placeCardClass[type].type}__places-list places__list tabs__content`}
     >
-      {sortOffers(offers, sortType).map((item) =>
+      {sortOffers(offers, sortType)?.map((item) =>
         item.city.name === city ? (
           <PlaceCard
             key={item.id}
