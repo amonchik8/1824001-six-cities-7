@@ -1,17 +1,18 @@
 import { ActionCreator } from './action';
 import { AuthorizationStatus, APIRoute } from '../const';
+import { adaptToClient } from '../utils/utils';
 
 export const fetchOfferList = () => (dispatch, _getState, api) =>
   api
     .get(APIRoute.OFFERS)
-    .then(({ data }) => dispatch(ActionCreator.loadOffers(data)));
+    .then(({ data }) =>
+      dispatch(ActionCreator.loadOffers(data.map(adaptToClient))));
 
 export const checkAuth = () => (dispatch, _getState, api) =>
   api
     .get(APIRoute.LOGIN)
     .then(() =>
-      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)),
-    )
+      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {});
 
 export const login =
@@ -21,8 +22,7 @@ export const login =
         .post(APIRoute.LOGIN, { email, password })
         .then(({ data }) => localStorage.setItem('token', data.token))
         .then(() =>
-          dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)),
-        );
+          dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)));
 
 export const logout = () => (dispatch, _getState, api) =>
   api

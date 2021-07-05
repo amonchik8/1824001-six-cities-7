@@ -20,26 +20,28 @@ export const sortOffers = (offersList, sortValue) => {
 export const isCheckedAuth = (authorizationStatus) =>
   authorizationStatus === AuthorizationStatus.UNKNOWN;
 
-const getChangedCase = (data) => {
-  for (const key in data) {
-    if (typeof data[key] !== 'object' && data[key] !== null) {
-      const newKey = key.replace(/_\w/, (match, offset, input) =>
-        input[offset + 1].toUpperCase(),
-      );
-      if (key !== newKey) {
-        Object.defineProperty(
-          data,
-          newKey,
-          Object.getOwnPropertyDescriptor(data, key),
-        );
-        delete data[key];
-      }
-    } else {
-      getChangedCase(data[key]);
-    }
-  }
-  return data;
-};
+export const adaptToClient = (offer) => {
+  const adaptedOffer = {
+    ...offer,
+    previewImage: offer.preview_image,
+    isFavorite: offer.is_favorite,
+    isPremium: offer.is_premium,
+    maxAdults: offer.max_adults,
+    bedrooms: offer.bedrooms,
+    host: {
+      ...offer.host,
+      avatarUrl: offer.host.avatar_url,
+      isPro: offer.host.is_pro,
+    },
+  };
 
-export const adaptToClient = (data) =>
-  getChangedCase(JSON.parse(JSON.stringify(data)));
+  delete adaptedOffer.preview_image;
+  delete adaptedOffer.is_favorite;
+  delete adaptedOffer.is_premium;
+  delete adaptedOffer.max_adults;
+  delete adaptedOffer.bedrooms;
+  delete adaptedOffer.host.avatar_url;
+  delete adaptedOffer.host.is_pro;
+
+  return adaptedOffer;
+};

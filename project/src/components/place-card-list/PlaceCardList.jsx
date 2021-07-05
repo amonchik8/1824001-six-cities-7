@@ -16,6 +16,7 @@ function PlaceCardList({ offers, city, onListItemHover = () => {}, type, sortTyp
             key={item.id}
             title={item.title}
             isPremium={item.isPremium}
+            isFavorite={item.isFavorite}
             price={item.price}
             type={item.type}
             previewImage={item.previewImage}
