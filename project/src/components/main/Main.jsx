@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { PlaceClass, SORT_VALUES } from '../../const';
 import { offersType } from '../../types';
 import { ActionCreator } from '../../store/action';
+import { sortOffers } from '../../utils/utils';
 import Header from '../header/Header';
 import LocationList from '../location-list/LocationList';
 import PlaceCardList from '../place-card-list';
@@ -11,8 +12,8 @@ import SortList from '../sort-list';
 
 import Map from '../map/Map';
 
-function Main({offers}) {
-  const { TOP_RATED_FIRST, PRICE_TO_HIGH, PRICE_TO_LOW, POPULAR } = SORT_VALUES;
+function Main({ offers }) {
+  const { POPULAR } = SORT_VALUES;
   const [city, setCity] = useState('Paris');
   const [sortType, setSortType] = useState(POPULAR);
   const [selectedPoint, setSelectedPoint] = useState({});
@@ -20,22 +21,6 @@ function Main({offers}) {
 
   const offersQuantity = offers?.filter(
     (item) => item.city.name === city).length;
-
-  const sortOffers = (offersList, sortValue) => {
-    const sortedByPrice = offersList?.sort(
-      (firstOffer, secondOffer) => secondOffer.price - firstOffer.price);
-    switch (sortValue) {
-      case PRICE_TO_LOW:
-        return sortedByPrice;
-      case PRICE_TO_HIGH:
-        return sortedByPrice.reverse();
-      case TOP_RATED_FIRST:
-        return offersList.sort(
-          (firstOffer, secondOffer) => secondOffer.rating - firstOffer.rating);
-      default:
-        return offersList;
-    }
-  };
 
   const onListItemHover = (id) => {
     const currentHotel = offers.find((offer) => offer.id === id);
@@ -128,4 +113,3 @@ Main.propTypes = {
 };
 export { Main };
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
-

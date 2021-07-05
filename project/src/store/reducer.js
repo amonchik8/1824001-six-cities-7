@@ -1,5 +1,6 @@
 import { ActionType } from './action';
 import { CITIES, AuthorizationStatus } from '../const';
+import { adaptToClient } from '../utils/utils';
 
 const initialState = {
   city: CITIES[1].name,
@@ -19,7 +20,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_OFFERS: {
       return {
         ...state,
-        offers: action.offers,
+        offers: adaptToClient(action.payload),
         isOffersLoaded: true,
       };
     }

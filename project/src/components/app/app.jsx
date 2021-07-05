@@ -5,13 +5,12 @@ import { connect } from 'react-redux';
 import { AppRoute, PlaceClass } from '../../const';
 import { reviewsType } from '../../types';
 import { isCheckedAuth } from '../../utils/utils';
-import  Main  from '../main';
+import Main from '../main';
 import SignIn from '../pages/sign-in/SignIn';
 import Chosen from '../pages/chosen/Chosen';
 import Room from '../pages/room/Room';
 import NotFound from '../pages/not-found/NotFound';
 import LoadingScreen from '../loading-screen';
-
 
 function App({ authorizationStatus, isOffersLoaded, reviews }) {
   if (isCheckedAuth(authorizationStatus) || !isOffersLoaded) {

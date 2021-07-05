@@ -33,7 +33,7 @@ function PlaceCard({
         <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
-            src={`img/apartment-${previewImage}`}
+            src={previewImage}
             width={placeCardClass[placeClass].width}
             height={placeCardClass[placeClass].width}
             alt="Place"
