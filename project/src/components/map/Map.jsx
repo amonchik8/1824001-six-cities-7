@@ -22,7 +22,7 @@ function Map({ offers, selectedPoint, city }) {
 
   useEffect(() => {
     if (map) {
-      offers.forEach((hotel) => {
+      offers?.forEach((hotel) => {
         leaflet
           .marker(
             {

@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { sortOffers } from '../../../utils/utils';
+import { ActionCreator } from '../../../store/action';
 import { PlaceClass } from '../../../const';
 import { offersType } from '../../../types';
 import Header from '../../header';
@@ -27,8 +30,10 @@ function Chosen({ offers }) {
                   </div>
                   <div className="favorites__places">
                     <PlaceCardList
+                      city="Amsterdam"
                       offers={offers}
                       type={PlaceClass.FAVORITES}
+                      sortOffers={sortOffers}
                     />
                   </div>
                 </li>
@@ -40,7 +45,14 @@ function Chosen({ offers }) {
                       </a>
                     </div>
                   </div>
-                  <div className="favorites__places"></div>
+                  <div className="favorites__places">
+                    <PlaceCardList
+                      city="Cologne"
+                      offers={offers}
+                      type={PlaceClass.FAVORITES}
+                      sortOffers={sortOffers}
+                    />
+                  </div>
                 </li>
               </ul>
             </section>
@@ -76,8 +88,17 @@ function Chosen({ offers }) {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeCity(offers) {
+    dispatch(ActionCreator.loadOffers(offers));
+  },
+});
 Chosen.propTypes = {
   offers: PropTypes.arrayOf(offersType),
 };
-
-export default Chosen;
+export { Chosen };
+export default connect(mapStateToProps, mapDispatchToProps)(Chosen);

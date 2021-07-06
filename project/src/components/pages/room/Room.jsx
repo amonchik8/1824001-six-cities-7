@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { ActionCreator } from '../../../store/action';
 import { offersType, reviewsType } from '../../../types';
 import { PlaceClass } from '../../../const';
 import PlaceCard from '../../place-card/PlaceCard';
@@ -18,8 +20,8 @@ function Room({ reviews, offers, type }) {
     }
   };
   const hotel = offers.find(
-    (item) => `/offer/${item.id}` === window.location.pathname,
-  );
+    (item) => `/offer/${item.id}` === window.location.pathname);
+  const city = hotel.city.name;
   const nearHotels = offers.filter((item) => item.id !== hotel.id);
   return (
     <div>
@@ -175,7 +177,7 @@ function Room({ reviews, offers, type }) {
               </div>
             </div>
             <section className="property__map map">
-              <Map offers={nearHotels} selectedPoint={selectedPoint} />
+              <Map offers={offers} selectedPoint={selectedPoint} city={city} />
             </section>
           </section>
           <div className="container">
@@ -228,10 +230,21 @@ function Room({ reviews, offers, type }) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeCity(offers) {
+    dispatch(ActionCreator.loadOffers(offers));
+  },
+});
+
 Room.propTypes = {
   reviews: PropTypes.arrayOf(reviewsType),
   offers: PropTypes.arrayOf(offersType),
   type: PropTypes.string,
 };
 
-export default Room;
+export { Room };
+export default connect(mapStateToProps, mapDispatchToProps)(Room);

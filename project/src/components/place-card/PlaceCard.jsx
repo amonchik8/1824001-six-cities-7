@@ -12,7 +12,7 @@ function PlaceCard({
   id,
   rating,
   placeClass,
-  isFavorites,
+  isFavorite,
   listItemHoverHandler = () => {},
 }) {
   return (
@@ -33,7 +33,7 @@ function PlaceCard({
         <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
-            src={`img/apartment-${previewImage}`}
+            src={previewImage}
             width={placeCardClass[placeClass].width}
             height={placeCardClass[placeClass].width}
             alt="Place"
@@ -48,7 +48,7 @@ function PlaceCard({
           </div>
           <button
             className={`place-card__bookmark-button button ${
-              isFavorites ? ' place-card__bookmark-button--active' : ''
+              isFavorite ? ' place-card__bookmark-button--active' : ''
             }`}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">

@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { PlaceClass, SORT_VALUES } from '../../const';
 import { offersType } from '../../types';
-import { OFFERS } from '../../mocks/offers';
+import { ActionCreator } from '../../store/action';
+import { sortOffers } from '../../utils/utils';
 import Header from '../header/Header';
 import LocationList from '../location-list/LocationList';
 import PlaceCardList from '../place-card-list';
@@ -11,30 +13,14 @@ import SortList from '../sort-list';
 import Map from '../map/Map';
 
 function Main({ offers }) {
-  const { TOP_RATED_FIRST, PRICE_TO_HIGH, PRICE_TO_LOW, POPULAR } = SORT_VALUES;
+  const { POPULAR } = SORT_VALUES;
   const [city, setCity] = useState('Paris');
-  const [defaultSort, setDefaultSort] = useState(POPULAR);
+  const [sortType, setSortType] = useState(POPULAR);
   const [selectedPoint, setSelectedPoint] = useState({});
-  const [sortedOffers, setSortedOffers] = useState(offers);
+  const [sortedOffers] = useState(offers);
 
-  const offersQuantity = OFFERS.filter(
+  const offersQuantity = offers?.filter(
     (item) => item.city.name === city).length;
-
-  const sortOffers = (sortValue) => {
-    const sortedByPrice = offers.sort(
-      (firstOffer, secondOffer) => secondOffer.price - firstOffer.price);
-    switch (sortValue) {
-      case PRICE_TO_LOW:
-        return sortedByPrice;
-      case PRICE_TO_HIGH:
-        return sortedByPrice.reverse();
-      case TOP_RATED_FIRST:
-        return offers.sort(
-          (firstOffer, secondOffer) => secondOffer.rating - firstOffer.rating);
-      default:
-        return offers;
-    }
-  };
 
   const onListItemHover = (id) => {
     const currentHotel = offers.find((offer) => offer.id === id);
@@ -43,11 +29,7 @@ function Main({ offers }) {
     }
   };
 
-  const handleSortClick = (value) => setDefaultSort(value);
-
-  useEffect(() => {
-    setSortedOffers(sortOffers(defaultSort));
-  }, [defaultSort, sortOffers, sortedOffers]);
+  const handleSortClick = (value) => setSortType(value);
 
   return (
     <>
@@ -67,22 +49,25 @@ function Main({ offers }) {
                 <b className="places__found">
                   {offersQuantity} places to stay in {city}
                 </b>
-                <SortList
-                  onSortChange={handleSortClick}
-                  defaultSort={defaultSort}
-                />
+                <SortList onSortChange={handleSortClick} sortType={sortType} />
                 <div className="main__places">
                   <PlaceCardList
                     city={city}
                     offers={sortedOffers}
                     type={PlaceClass.MAIN}
+                    sortType={sortType}
+                    sortOffers={sortOffers}
                     onListItemHover={onListItemHover}
                   />
                 </div>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map offers={offers} selectedPoint={selectedPoint} city={city} />
+                  <Map
+                    offers={offers}
+                    selectedPoint={selectedPoint}
+                    city={city}
+                  />
                 </section>
               </div>
             </div>
@@ -114,7 +99,17 @@ function Main({ offers }) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeCity(offers) {
+    dispatch(ActionCreator.loadOffers(offers));
+  },
+});
 Main.propTypes = {
   offers: PropTypes.arrayOf(offersType),
 };
-export default Main;
+export { Main };
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

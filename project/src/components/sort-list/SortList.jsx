@@ -4,13 +4,13 @@ import { SORT_VALUES } from '../../const';
 
 const sortValues = Object.values(SORT_VALUES);
 
-function SortList({ onSortChange, defaultSort }) {
+function SortList({ onSortChange, sortType }) {
   const [openSort, setOpenSort] = useState(false);
   return (
     <div className="places__sorting" onClick={() => setOpenSort(!openSort)}>
       <span className="places__sorting-caption">Sort by </span>
       <span className="places__sorting-type" tabIndex="0">
-        {defaultSort}
+        {sortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
@@ -23,7 +23,7 @@ function SortList({ onSortChange, defaultSort }) {
         {sortValues.map((item) => (
           <li
             className={`places__option ${
-              item === defaultSort && 'places__option--active'
+              item === sortType && 'places__option--active'
             }`}
             tabIndex="0"
             key={item}
@@ -39,7 +39,7 @@ function SortList({ onSortChange, defaultSort }) {
 
 SortList.propTypes = {
   onSortChange: PropTypes.func.isRequired,
-  defaultSort: PropTypes.string.isRequired,
+  sortType: PropTypes.string.isRequired,
 };
 
 export default SortList;

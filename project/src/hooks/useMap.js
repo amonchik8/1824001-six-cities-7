@@ -4,8 +4,7 @@ import { CITIES } from '../const';
 
 function useMap(mapRef, offers, city) {
   const [map, setMap] = useState(null);
-  const location = CITIES.find((item) => item.name === city);
-
+  const location = CITIES?.find((item) => item.name === city);
   useEffect(() => {
     const { latitude, longitude, zoom } = location.location;
     if (mapRef.current !== null && map === null) {
