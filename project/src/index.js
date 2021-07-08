@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from 'redux';
+import { redirect } from './store/middlewares/redirect';
 import { ActionCreator } from './store/action';
 import { checkAuth, fetchOfferList } from './store/api-actions';
 import { createAPI } from '../src/services/api';
@@ -23,7 +24,8 @@ const api = createAPI(() =>
 );
 const store = createStore(
   reducer,
-  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
+  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)),
+    applyMiddleware(redirect)),
 );
 
 store.dispatch(checkAuth());

@@ -1,5 +1,5 @@
 import { ActionCreator } from './action';
-import { AuthorizationStatus, APIRoute } from '../const';
+import { AuthorizationStatus, APIRoute, AppRoute } from '../const';
 import { adaptToClient } from '../utils/utils';
 
 export const fetchOfferList = () => (dispatch, _getState, api) =>
@@ -22,7 +22,8 @@ export const login =
         .post(APIRoute.LOGIN, { email, password })
         .then(({ data }) => localStorage.setItem('token', data.token))
         .then(() =>
-          dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)));
+          dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+        .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)));
 
 export const logout = () => (dispatch, _getState, api) =>
   api
