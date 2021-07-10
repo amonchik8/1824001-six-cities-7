@@ -1,12 +1,20 @@
 import { ActionCreator } from './action';
 import { AuthorizationStatus, APIRoute, AppRoute } from '../const';
-import { adaptToClient } from '../utils/utils';
+import { adaptToClient, adaptUserInfo } from '../utils/utils';
 
 export const fetchOfferList = () => (dispatch, _getState, api) =>
   api
     .get(APIRoute.OFFERS)
     .then(({ data }) =>
       dispatch(ActionCreator.loadOffers(data.map(adaptToClient))));
+
+export const fetchOfferNearbyList = (id) => (dispatch, _getState, api) =>
+  api
+    .get(`${APIRoute.OFFERS}/${id}${APIRoute.OFFERS_NEARBY}`)
+    .then(({ data }) => {
+      dispatch(
+        ActionCreator.loadOffersNearby(data.map(adaptToClient)));
+    });
 
 export const checkAuth = () => (dispatch, _getState, api) =>
   api
@@ -20,9 +28,12 @@ export const login =
     (dispatch, _getState, api) =>
       api
         .post(APIRoute.LOGIN, { email, password })
-        .then(({ data }) => localStorage.setItem('token', data.token))
+        .then(({ data }) => {
+          localStorage.setItem('token', data.token);
+          dispatch(ActionCreator.loadUserInfo(adaptUserInfo(data)));
+        })
         .then(() =>
-          dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+          dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH)))
         .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)));
 
 export const logout = () => (dispatch, _getState, api) =>
