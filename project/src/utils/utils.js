@@ -45,3 +45,17 @@ export const adaptToClient = (offer) => {
 
   return adaptedOffer;
 };
+
+export const adaptUserInfo = (userInfo) => {
+  const adaptedUserInfo = {
+    ...userInfo,
+    avatarUrl: userInfo.avatar_url,
+    isPro: userInfo.is_pro,
+  };
+
+  delete adaptedUserInfo.token;
+  delete adaptedUserInfo.avatar_url;
+  delete adaptedUserInfo.is_pro;
+
+  return adaptedUserInfo;
+};

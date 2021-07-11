@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route, Router as BrowserRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { AppRoute, PlaceClass } from '../../const';
@@ -11,6 +11,8 @@ import Chosen from '../pages/chosen/Chosen';
 import Room from '../pages/room/Room';
 import NotFound from '../pages/not-found/NotFound';
 import LoadingScreen from '../loading-screen';
+import PrivateRoute from '../private-router/PrivateRoute';
+import browserHisory from '../../browser-history';
 
 function App({ authorizationStatus, isOffersLoaded, reviews }) {
   if (isCheckedAuth(authorizationStatus) || !isOffersLoaded) {
@@ -18,7 +20,7 @@ function App({ authorizationStatus, isOffersLoaded, reviews }) {
   }
   return (
     <div>
-      <BrowserRouter>
+      <BrowserRouter history={browserHisory}>
         <Switch>
           <Route path={AppRoute.MAIN} exact>
             <Main />
@@ -26,9 +28,11 @@ function App({ authorizationStatus, isOffersLoaded, reviews }) {
           <Route path={AppRoute.SIGN_IN} exact>
             <SignIn />
           </Route>
-          <Route path={AppRoute.FAVORITES} exact>
-            <Chosen />
-          </Route>
+          <PrivateRoute
+            path={AppRoute.FAVORITES}
+            exact
+            render={() => <Chosen />}
+          />
           <Route path={AppRoute.ROOM} exact>
             <Room reviews={reviews} type={PlaceClass.NEAR_PLACES} />
           </Route>
