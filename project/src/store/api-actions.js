@@ -1,6 +1,6 @@
 import { ActionCreator } from './action';
 import { AuthorizationStatus, APIRoute, AppRoute } from '../const';
-import { adaptToClient, adaptUserInfo } from '../utils/utils';
+import { adaptToClient, adaptUserInfo, adaptReview } from '../utils/utils';
 
 export const fetchOfferList = () => (dispatch, _getState, api) =>
   api
@@ -15,6 +15,11 @@ export const fetchOfferNearbyList = (id) => (dispatch, _getState, api) =>
       dispatch(
         ActionCreator.loadOffersNearby(data.map(adaptToClient)));
     });
+
+export const fetchReviewList = (id) => (dispatch, _getState, api) =>
+  api.get(`${APIRoute.REVIEWS}/${id}`).then(({ data }) => {
+    dispatch(ActionCreator.loadReviews(data.map((item) => adaptReview(item))));
+  });
 
 export const checkAuth = () => (dispatch, _getState, api) =>
   api

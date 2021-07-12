@@ -5,6 +5,7 @@ const initialState = {
   city: CITIES[1].name,
   offers: [],
   offersNearby: [],
+  reviews: [],
   user: {},
   authorizationStatus: AuthorizationStatus.UNKNOW,
   isOffersLoaded: false,
@@ -29,6 +30,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offersNearby: action.payload,
+      };
+    case ActionType.LOAD_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
