@@ -1,22 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function RadioButton({ id, onChange }) {
+function RadioButton({ rating }) {
   return (
     <>
       <input
         className="form__rating-input visually-hidden"
         name="rating"
-        value={id}
-        id={`"${id}-stars"`}
+        value={rating}
+        id={`${rating}-stars`}
         type="radio"
-        onChange={(e) => {
-          e.preventDefault();
-          onChange(id);
-        }}
       />
       <label
-        htmlFor={`"${id}-stars"`}
+        htmlFor={`${rating}-stars`}
         className="reviews__rating-label form__rating-label"
         title="perfect"
       >
@@ -29,8 +25,7 @@ function RadioButton({ id, onChange }) {
 }
 
 RadioButton.propTypes = {
-  id: PropTypes.number,
-  onChange: PropTypes.func,
+  rating: PropTypes.number,
 };
 
 export default RadioButton;

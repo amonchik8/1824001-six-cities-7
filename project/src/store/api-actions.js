@@ -46,3 +46,12 @@ export const logout = () => (dispatch, _getState, api) =>
     .delete(APIRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(ActionCreator.logout()));
+
+export const sendReview =
+  ({ comment, rating, id }) =>
+    (dispatch, _getState, api) =>
+      api.
+        post(`${APIRoute.REVIEWS}/${id}`, { comment, rating })
+        .then(({data}) => {
+          dispatch(ActionCreator.loadReviews(data.map(adaptReview)));
+        });
