@@ -5,20 +5,20 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap';
 import { offersType } from '../../types';
 
+const iconDefault = leaflet.icon({
+  iconUrl: 'img/pin.svg',
+  iconSize: [30, 30],
+  iconAnchor: [15, 30],
+});
+const iconActive = leaflet.icon({
+  iconUrl: 'img/pin-active.svg',
+  iconSize: [30, 30],
+  iconAnchor: [15, 30],
+});
+
 function Map({ offers, selectedPoint, city }) {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, offers, city);
-
-  const iconDefault = leaflet.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-  });
-  const iconActive = leaflet.icon({
-    iconUrl: 'img/pin-active.svg',
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-  });
+  const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
@@ -31,12 +31,11 @@ function Map({ offers, selectedPoint, city }) {
             },
             {
               icon: hotel?.id === selectedPoint?.id ? iconActive : iconDefault,
-            },
-          )
+            })
           .addTo(map);
       });
     }
-  }, [map, offers, selectedPoint, iconDefault, iconActive]);
+  }, [map, offers, selectedPoint]);
 
   return <div id="map" style={{ height: '100%' }} ref={mapRef}></div>;
 }

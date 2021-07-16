@@ -31,6 +31,18 @@ const reducer = (state = initialState, action) => {
         ...state,
         offersNearby: action.payload,
       };
+    case ActionType.SET_IS_LOAD_OFFERS:
+      return {
+        ...state,
+        isDataLoaded: action.payload,
+      };
+    case ActionType.LOAD_OFFER:
+      return {
+        ...state,
+        offers: [action.payload],
+        isDataLoaded: true,
+      };
+
     case ActionType.LOAD_REVIEWS:
       return {
         ...state,

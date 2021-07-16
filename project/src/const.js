@@ -33,6 +33,14 @@ export const placeCardClass = {
     height: '200',
   },
 };
+export const Locations = {
+  PARIS: 'Paris',
+  COLOGNE: 'Cologne',
+  BRUSSELS: 'Brussels',
+  AMSTERDAM: 'Amsterdam',
+  HAMBURG: 'Hamburg',
+  DUSSELDORF: 'Dusseldorf',
+};
 
 export const CITIES = [
   {

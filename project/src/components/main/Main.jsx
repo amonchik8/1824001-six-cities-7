@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { PlaceClass, SORT_VALUES } from '../../const';
+import { PlaceClass, SORT_VALUES, Locations } from '../../const';
 import { offersType } from '../../types';
 import { ActionCreator } from '../../store/action';
 import { sortOffers } from '../../utils/utils';
@@ -12,9 +12,8 @@ import SortList from '../sort-list';
 
 import Map from '../map/Map';
 
-function Main({ offers }) {
+function Main({ offers, city }) {
   const { POPULAR } = SORT_VALUES;
-  const [city, setCity] = useState('Paris');
   const [sortType, setSortType] = useState(POPULAR);
   const [selectedPoint, setSelectedPoint] = useState({});
   const [sortedOffers] = useState(offers);
@@ -39,7 +38,7 @@ function Main({ offers }) {
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
             <section className="locations container">
-              <LocationList getCity={(e) => setCity(e)} />
+              <LocationList locations={Object.values(Locations)} />
             </section>
           </div>
           <div className="cities">
@@ -99,8 +98,9 @@ function Main({ offers }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  offers: state.offers,
+const mapStateToProps = ({offers, city}) => ({
+  offers,
+  city,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -109,6 +109,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 Main.propTypes = {
+  city: PropTypes.string.isRequired,
   offers: PropTypes.arrayOf(offersType),
 };
 export { Main };

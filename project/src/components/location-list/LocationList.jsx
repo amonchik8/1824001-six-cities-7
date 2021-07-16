@@ -1,26 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { CITIES } from '../../const';
+import { AppRoute } from '../../const';
 import { ActionCreator } from '../../store/action';
 
-function LocationList({ city, changeCity, getCity }) {
+function LocationList({ locations, city, changeCity }) {
   return (
     <ul className="locations__list tabs__list">
-      {CITIES.map((item) => (
-        <li className="locations__item" key={item.name}>
-          <span
-            className={`locations__item-link tabs__item ${
-              item.name === city ? 'tabs__item--active' : ''
-            }`}
-            style={{ cursor: 'pointer' }}
+      {locations.map((item) => (
+        <li className="locations__item" key={item}>
+          <Link
+            to={AppRoute.MAIN}
             onClick={() => {
-              changeCity(item.name);
-              getCity(item.name);
+              changeCity(item);
             }}
+            className={
+              city === item
+                ? 'locations__item-link tabs__item tabs__item--active'
+                : 'locations__item-link tabs__item'
+            }
           >
-            <span>{item.name}</span>
-          </span>
+            <span>{item}</span>
+          </Link>
         </li>
       ))}
     </ul>
@@ -30,11 +32,11 @@ function LocationList({ city, changeCity, getCity }) {
 LocationList.propTypes = {
   city: PropTypes.string.isRequired,
   changeCity: PropTypes.func.isRequired,
-  getCity: PropTypes.func.isRequired,
+  locations: PropTypes.arrayOf(string).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  city: state.city,
+const mapStateToProps = ({ city }) => ({
+  city,
 });
 
 const mapDispatchToProps = (dispatch) => ({

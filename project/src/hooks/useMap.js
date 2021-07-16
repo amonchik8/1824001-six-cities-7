@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import leaflet from 'leaflet';
 import { CITIES } from '../const';
 
-function useMap(mapRef, offers, city) {
+function useMap(mapRef, city) {
   const [map, setMap] = useState(null);
   const location = CITIES?.find((item) => item.name === city);
   useEffect(() => {
@@ -32,7 +32,7 @@ function useMap(mapRef, offers, city) {
       map.panTo([latitude, longitude], zoom);
     }
 
-  }, [mapRef, map, offers, city, location.location]);
+  }, [mapRef, map, city, location.location]);
 
   return map;
 }
