@@ -4,13 +4,14 @@ import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { offersType, reviewsType } from '../../../types';
 import { AuthorizationStatus, PlaceClass } from '../../../const';
-import PlaceCard from '../../place-card/PlaceCard';
-import Header from '../../header';
+import PlaceCard from '../../common/place-card-list/place-card';
+import { Map } from '../../common';
+import Header from '../../common/header';
 import NotFound from '../not-found';
-import LoadingForOffer from '../../loading-for-offer';
-import Form from '../../form';
-import ReviewsList from '../../reviews-list';
-import Map from '../../map/Map';
+import { LoadingForOffer } from './loading-for-offer';
+import ReviewsList from './reviews-list';
+import Form from './form';
+
 import {
   fetchReviewList,
   fetchOfferNearbyList,
@@ -179,10 +180,7 @@ function Room({
                   </div>
                 </div>
                 <section className="property__map map">
-                  <Map
-                    city={city}
-                    offers={offersNearby}
-                  />
+                  <Map city={city} offers={offersNearby} />
                 </section>
               </section>
               <div className="container">

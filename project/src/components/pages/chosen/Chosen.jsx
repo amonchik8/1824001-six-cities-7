@@ -6,9 +6,8 @@ import { sortOffers } from '../../../utils/utils';
 import { ActionCreator } from '../../../store/action';
 import { PlaceClass } from '../../../const';
 import { offersType } from '../../../types';
-import Header from '../../header';
-import Logo from '../../logo';
-import PlaceCardList from '../../place-card-list';
+import {Logo, PlaceCardList} from '../../common';
+import Header from '../../common/header';
 
 function Chosen({ offers }) {
   return (

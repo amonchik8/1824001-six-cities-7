@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import { AppRoute, PlaceClass } from '../../const';
 import { isCheckedAuth } from '../../utils/utils';
 import browserHisory from '../../browser-history';
-import Main from '../main';
+import Main from '../pages/main';
 import SignIn from '../pages/sign-in/SignIn';
 import Chosen from '../pages/chosen/Chosen';
 import Room from '../pages/room/Room';
 import NotFound from '../pages/not-found/NotFound';
-import LoadingScreen from '../loading-screen';
-import PrivateRoute from '../private-router/PrivateRoute';
+import PrivateRoute from '../common/private-route';
+import { LoadingScreen } from '../common';
 
 function App({ authorizationStatus, isOffersLoaded }) {
   if (isCheckedAuth(authorizationStatus) || !isOffersLoaded) {
