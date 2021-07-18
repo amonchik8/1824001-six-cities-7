@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { offersType, reviewsType } from '../../../types';
 import { AuthorizationStatus, PlaceClass } from '../../../const';
@@ -22,6 +22,9 @@ function Room({
   reviews,
   authorizationStatus,
   pageType,
+  loadOffer,
+  loadReviewList,
+  loadOfferNearbyList,
 }) {
   const {
     goods,
@@ -38,15 +41,13 @@ function Room({
     host,
     city,
   } = offer;
-
-  const dispatch = useDispatch();
   const params = useParams();
 
   useEffect(() => {
-    dispatch(fetchOffer(params.id));
-    dispatch(fetchReviewList(params.id));
-    dispatch(fetchOfferNearbyList(params.id));
-  }, [dispatch, params.id]);
+    loadOffer(params.id);
+    loadReviewList(params.id);
+    loadOfferNearbyList(params.id);
+  }, [loadOffer, loadReviewList, loadOfferNearbyList, params.id]);
 
   return (
     <div>
@@ -224,13 +225,22 @@ const mapStateToProps = ({
   authorizationStatus,
 });
 
+const mapDispatchToProps = {
+  loadReviewList: fetchReviewList,
+  loadOfferNearbyList: fetchOfferNearbyList,
+  loadOffer: fetchOffer,
+};
+
 Room.propTypes = {
   reviews: PropTypes.arrayOf(reviewsType),
-  offer: PropTypes.arrayOf(offersType),
+  offer: offersType,
   pageType: PropTypes.string,
   offersNearby: PropTypes.arrayOf(offersType).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
+  loadReviewList: PropTypes.func.isRequired,
+  loadOfferNearbyList: PropTypes.func.isRequired,
+  loadOffer: PropTypes.func.isRequired,
 };
 
 export { Room };
-export default connect(mapStateToProps)(Room);
+export default connect(mapStateToProps, mapDispatchToProps)(Room);

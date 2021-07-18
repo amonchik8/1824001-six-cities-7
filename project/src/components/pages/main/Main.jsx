@@ -1,32 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { PlaceClass, SORT_VALUES, Locations } from '../../../const';
 import { offersType } from '../../../types';
-import { ActionCreator } from '../../../store/action';
+import { fetchOfferList } from '../../../store/api-actions';
 import { sortOffers } from '../../../utils/utils';
 import { PlaceCardList, Map } from '../../common';
 import Header from '../../common/header/Header';
 import SortList from './sort-list';
 import LocationList from './location-list';
 
-function Main({ offers, city }) {
+function Main({ offers, city, changeCity }) {
   const { POPULAR } = SORT_VALUES;
   const [sortType, setSortType] = useState(POPULAR);
   const [selectedPoint, setSelectedPoint] = useState({});
-  const [sortedOffers] = useState(offers);
 
   const offersQuantity = offers?.filter(
     (item) => item.city.name === city).length;
 
   const onListItemHover = (id) => {
-    const currentHotel = offers.find((offer) => offer.id === id);
-    if (currentHotel) {
-      setSelectedPoint(currentHotel);
+    const currentOffer = offers.find((offer) => offer.id === id);
+    if (currentOffer) {
+      setSelectedPoint(currentOffer);
     }
   };
 
+  const sortedOffers = sortOffers(offers, POPULAR);
+
+  const sortedByCityOffers = sortedOffers.filter(
+    (offer) => offer.city.name === city);
+
   const handleSortClick = (value) => setSortType(value);
+
+  useEffect(() => {
+    changeCity(offers);
+  }, [changeCity, offers]);
 
   return (
     <>
@@ -61,9 +69,9 @@ function Main({ offers, city }) {
               <div className="cities__right-section">
                 <section className="cities__map map">
                   <Map
-                    offers={offers}
+                    offers={sortedByCityOffers}
                     selectedPoint={selectedPoint}
-                    city={city}
+                    city={sortedByCityOffers[0].city}
                   />
                 </section>
               </div>
@@ -101,14 +109,12 @@ const mapStateToProps = ({ offers, city }) => ({
   city,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  changeCity(offers) {
-    dispatch(ActionCreator.loadOffers(offers));
-  },
-});
+const mapDispatchToProps = { changeCity: fetchOfferList };
+
 Main.propTypes = {
   city: PropTypes.string.isRequired,
   offers: PropTypes.arrayOf(offersType),
+  changeCity: PropTypes.func.isRequired,
 };
 export { Main };
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

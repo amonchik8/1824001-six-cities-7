@@ -59,6 +59,5 @@ export const sendReview =
       api
         .post(`${APIRoute.REVIEWS}/${id}`, { comment, rating })
         .then(({ data }) => {
-          dispatch(ActionCreator.loadReviews(data.map(adaptReview))).catch(
-            () => {});
+          dispatch(ActionCreator.loadReviews(data.map(adaptReview)));
         });

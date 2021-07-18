@@ -1,8 +1,10 @@
 import { ActionType } from './action';
-import { CITIES, AuthorizationStatus } from '../const';
+import { AuthorizationStatus } from '../const';
+
+const INITIAL_CITY = 'Paris';
 
 const initialState = {
-  city: CITIES[1].name,
+  city: INITIAL_CITY,
   offer: {},
   offers: [],
   offersNearby: [],

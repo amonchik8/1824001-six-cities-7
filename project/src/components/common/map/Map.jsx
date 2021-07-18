@@ -25,21 +25,26 @@ export function Map({ city, offers, selectedPoint }) {
 
     if (map) {
       markers.addTo(map);
-      offers?.forEach((hotel) => {
+      offers?.forEach(({location: {latitude, longitude}, id}) => {
         leaflet
           .marker(
             {
-              lat: hotel.location.latitude,
-              lng: hotel.location.longitude,
+              lat: latitude,
+              lng: longitude,
             },
             {
               icon:
-                selectedPoint && hotel?.id === selectedPoint?.id
+                selectedPoint && id === selectedPoint?.id
                   ? iconActive
                   : iconDefault,
             })
           .addTo(markers);
       });
+
+      map.flyTo(
+        [offers[0].city.location.latitude, offers[0].city.location.longitude],
+        offers[0].city.location.zoom,
+      );
     }
 
     return () => {

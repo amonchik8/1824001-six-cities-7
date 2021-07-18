@@ -68,7 +68,7 @@ function Form({ submit, id, loadReviewList }) {
 
 Form.propTypes = {
   submit: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   loadReviewList: PropTypes.func.isRequired,
 };
 
