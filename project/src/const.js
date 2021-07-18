@@ -3,6 +3,7 @@ export const AppRoute = {
   SIGN_IN: '/login',
   FAVORITES: '/favorites',
   ROOM: '/offer/:id',
+  NOT_FOUND: '/404',
 };
 export const PlaceClass = {
   MAIN: 'MAIN',

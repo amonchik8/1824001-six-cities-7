@@ -13,8 +13,8 @@ import NotFound from '../pages/not-found/NotFound';
 import PrivateRoute from '../common/private-route';
 import { LoadingScreen } from '../common';
 
-function App({ authorizationStatus, isOffersLoaded }) {
-  if (isCheckedAuth(authorizationStatus) || !isOffersLoaded) {
+function App({ authorizationStatus, isDataLoaded }) {
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return <LoadingScreen />;
   }
   return (
@@ -45,12 +45,12 @@ function App({ authorizationStatus, isOffersLoaded }) {
 }
 App.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  isOffersLoaded: PropTypes.bool.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  isOffersLoaded: state.isOffersLoaded,
+const mapStateToProps = ({ authorizationStatus, isDataLoaded }) => ({
+  authorizationStatus,
+  isDataLoaded,
 });
 
 export { App };

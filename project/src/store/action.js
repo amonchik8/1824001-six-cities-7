@@ -1,9 +1,8 @@
 export const ActionType = {
   CHANGE_CITY: 'main/changeCity',
+  LOAD_OFFER: 'data/loadOffer',
   LOAD_OFFERS: 'data/loadOffers',
-  LOAD_OFFERS_NEARBY: 'offers/loadOffersNearby',
-  SET_IS_LOAD_OFFERS: 'offers/setIsLoadOffers',
-  LOAD_OFFER: 'offers/loadOffer',
+  LOAD_OFFERS_NEARBY: 'data/loadOffersNearby',
   LOAD_REVIEWS: 'reviews/loadReviews',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOAD_USER_INFO: 'user/loadUserInfo',
@@ -16,21 +15,17 @@ export const ActionCreator = {
     type: ActionType.CHANGE_CITY,
     payload: city,
   }),
-  loadOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
-    payload: offers,
-  }),
-  loadOffersNearby: (offersNearby) => ({
-    type: ActionType.LOAD_OFFERS_NEARBY,
-    payload: offersNearby,
-  }),
   loadOffer: (offer) => ({
     type: ActionType.LOAD_OFFER,
     payload: offer,
   }),
-  setIsLoadOffers: (status) => ({
-    type: ActionType.SET_IS_LOAD_OFFERS,
-    payload: status,
+  loadOffers: (offers) => ({
+    type: ActionType.LOAD_OFFERS,
+    payload: offers,
+  }),
+  loadOffersNearby: (offers) => ({
+    type: ActionType.LOAD_OFFERS_NEARBY,
+    payload: offers,
   }),
   loadReviews: (reviews) => ({
     type: ActionType.LOAD_REVIEWS,

@@ -16,12 +16,15 @@ const iconActive = leaflet.icon({
   iconAnchor: [15, 30],
 });
 
-export function Map({ offers, selectedPoint, city }) {
+export function Map({ city, offers, selectedPoint }) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+    const markers = leaflet.layerGroup();
+
     if (map) {
+      markers.addTo(map);
       offers?.forEach((hotel) => {
         leaflet
           .marker(
@@ -30,19 +33,39 @@ export function Map({ offers, selectedPoint, city }) {
               lng: hotel.location.longitude,
             },
             {
-              icon: hotel?.id === selectedPoint?.id ? iconActive : iconDefault,
+              icon:
+                selectedPoint && hotel?.id === selectedPoint?.id
+                  ? iconActive
+                  : iconDefault,
             })
-          .addTo(map);
+          .addTo(markers);
       });
     }
+
+    return () => {
+      markers.clearLayers();
+    };
+
   }, [map, offers, selectedPoint]);
 
-  return <div id="map" style={{ height: '100%' }} ref={mapRef}></div>;
+  return (
+    <section
+      className="cities__map map"
+      style={{ height: '100%' }}
+      ref={mapRef}
+    />
+  );
 }
 Map.propTypes = {
   offers: PropTypes.arrayOf(offersType),
   selectedPoint: PropTypes.object,
-  city: PropTypes.string,
+  city: PropTypes.shape({
+    location: PropTypes.shape({
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default Map;
