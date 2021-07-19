@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RadioButton from './radio-button/RadioButton';
+import RadioButton from './radio-button/radio-button';
 
 const ratingId = [5, 4, 3, 2, 1];
 

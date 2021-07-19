@@ -6,7 +6,7 @@ import { offersType } from '../../../types';
 import { fetchOfferList } from '../../../store/api-actions';
 import { sortOffers } from '../../../utils/utils';
 import { PlaceCardList, Map } from '../../common';
-import Header from '../../common/header/Header';
+import Header from '../../common/header/header';
 import SortList from './sort-list';
 import LocationList from './location-list';
 

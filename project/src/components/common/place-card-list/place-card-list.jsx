@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { offersType } from '../../../types';
 import { PlaceClass, placeCardClass } from '../../../const';
-import PlaceCard from './place-card/PlaceCard';
+import PlaceCard from './place-card/place-card';
 
 export function PlaceCardList({ offers, city, onListItemHover = () => {}, type, sortType, sortOffers}) {
 

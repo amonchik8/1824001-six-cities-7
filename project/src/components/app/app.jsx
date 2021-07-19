@@ -6,10 +6,10 @@ import { AppRoute, PlaceClass } from '../../const';
 import { isCheckedAuth } from '../../utils/utils';
 import browserHisory from '../../browser-history';
 import Main from '../pages/main';
-import SignIn from '../pages/sign-in/SignIn';
-import Chosen from '../pages/chosen/Chosen';
-import Room from '../pages/room/Room';
-import NotFound from '../pages/not-found/NotFound';
+import SignIn from '../pages/sign-in/sign-in';
+import Chosen from '../pages/chosen/chosen';
+import Room from '../pages/room/room';
+import NotFound from '../pages/not-found/not-found';
 import PrivateRoute from '../common/private-route';
 import { LoadingScreen } from '../common';
 

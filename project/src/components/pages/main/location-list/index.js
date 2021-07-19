@@ -1,1 +1,1 @@
-export { default } from './LocationList';
+export { default } from './location-list';
