@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { sortOffers } from '../../../utils/utils';
-import { ActionCreator } from '../../../store/action';
+import { fetchOfferList } from '../../../store/api-actions';
 import { PlaceClass } from '../../../const';
 import { offersType } from '../../../types';
-import Header from '../../header';
-import Logo from '../../logo';
-import PlaceCardList from '../../place-card-list';
+import {Logo, PlaceCardList} from '../../common';
+import Header from '../../common/header';
 
-function Chosen({ offers }) {
+function Chosen({ offers, changeCity }) {
+
+  useEffect(() => {
+    changeCity(offers);
+  }, [changeCity, offers]);
+
   return (
     <div>
       <div className="page">
@@ -92,13 +96,11 @@ const mapStateToProps = (state) => ({
   offers: state.offers,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  changeCity(offers) {
-    dispatch(ActionCreator.loadOffers(offers));
-  },
-});
+const mapDispatchToProps = { changeCity: fetchOfferList };
+
 Chosen.propTypes = {
   offers: PropTypes.arrayOf(offersType),
+  changeCity: PropTypes.func.isRequired,
 };
 export { Chosen };
 export default connect(mapStateToProps, mapDispatchToProps)(Chosen);

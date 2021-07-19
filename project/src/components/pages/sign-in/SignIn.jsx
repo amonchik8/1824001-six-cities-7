@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AppRoute } from '../../../const';
 import { login } from '../../../store/api-actions';
-import Header from '../../header/Header';
+import Header from '../../common/header';
 
 function SignIn({ onSubmit }) {
   const emailRef = useRef(null);

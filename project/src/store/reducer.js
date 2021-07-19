@@ -1,34 +1,47 @@
 import { ActionType } from './action';
-import { CITIES, AuthorizationStatus } from '../const';
+import { AuthorizationStatus } from '../const';
+
+const INITIAL_CITY = 'Paris';
 
 const initialState = {
-  city: CITIES[1].name,
+  city: INITIAL_CITY,
+  offer: {},
   offers: [],
   offersNearby: [],
+  reviews: [],
   user: {},
   authorizationStatus: AuthorizationStatus.UNKNOW,
-  isOffersLoaded: false,
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.CHANGE_CITY: {
+    case ActionType.CHANGE_CITY:
       return {
         ...state,
         city: action.payload,
       };
-    }
-    case ActionType.LOAD_OFFERS: {
+    case ActionType.LOAD_OFFER:
+      return {
+        ...state,
+        offer: action.payload,
+        isDataLoaded: true,
+      };
+    case ActionType.LOAD_OFFERS:
       return {
         ...state,
         offers: action.payload,
-        isOffersLoaded: true,
+        isDataLoaded: true,
       };
-    }
     case ActionType.LOAD_OFFERS_NEARBY:
       return {
         ...state,
         offersNearby: action.payload,
+      };
+    case ActionType.LOAD_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {

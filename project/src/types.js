@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 
 export const offersType = PropTypes.shape({
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   isPremium: PropTypes.bool,
-  price: PropTypes.number.isRequired,
-  type: PropTypes.string.isRequired,
-  previewImage: PropTypes.string.isRequired,
+  price: PropTypes.number,
+  type: PropTypes.string,
+  previewImage: PropTypes.string,
 });
 
 export const reviewsType = PropTypes.shape({

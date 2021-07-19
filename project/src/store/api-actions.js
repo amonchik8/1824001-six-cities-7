@@ -1,20 +1,31 @@
 import { ActionCreator } from './action';
 import { AuthorizationStatus, APIRoute, AppRoute } from '../const';
-import { adaptToClient, adaptUserInfo } from '../utils/utils';
+import { adaptToClient, adaptUserInfo, adaptReview } from '../utils/utils';
 
-export const fetchOfferList = () => (dispatch, _getState, api) =>
-  api
-    .get(APIRoute.OFFERS)
-    .then(({ data }) =>
-      dispatch(ActionCreator.loadOffers(data.map(adaptToClient))));
+export const fetchOffer = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.OFFERS}/${id}`)
+    .then(({data}) => dispatch(ActionCreator.loadOffer(adaptToClient(data))))
+    .catch(() => dispatch(ActionCreator.redirectToRoute(AppRoute.NOT_FOUND)))
+);
 
-export const fetchOfferNearbyList = (id) => (dispatch, _getState, api) =>
-  api
-    .get(`${APIRoute.OFFERS}/${id}${APIRoute.OFFERS_NEARBY}`)
+export const fetchOfferList = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.OFFERS)
     .then(({ data }) => {
-      dispatch(
-        ActionCreator.loadOffersNearby(data.map(adaptToClient)));
-    });
+      dispatch(ActionCreator.loadOffers(data.map(adaptToClient)));
+    })
+);
+
+export const fetchOfferNearbyList = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.OFFERS}/${id}${APIRoute.OFFERS_NEARBY}`)
+    .then(({ data }) => {
+      dispatch(ActionCreator.loadOffersNearby(data.map(adaptToClient)));
+    })
+);
+
+export const fetchReviewList = (id) => (dispatch, _getState, api) =>
+  api.get(`${APIRoute.REVIEWS}/${id}`).then(({ data }) => {
+    dispatch(ActionCreator.loadReviews(data.map((item) => adaptReview(item))));
+  });
 
 export const checkAuth = () => (dispatch, _getState, api) =>
   api
@@ -41,3 +52,12 @@ export const logout = () => (dispatch, _getState, api) =>
     .delete(APIRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(ActionCreator.logout()));
+
+export const sendReview =
+  ({ comment, rating, id }) =>
+    (dispatch, _getState, api) =>
+      api
+        .post(`${APIRoute.REVIEWS}/${id}`, { comment, rating })
+        .then(({ data }) => {
+          dispatch(ActionCreator.loadReviews(data.map(adaptReview)));
+        });
