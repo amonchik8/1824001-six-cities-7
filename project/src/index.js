@@ -6,7 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from 'redux';
 import { createAPI } from '../src/services/api';
 import { redirect } from './store/middlewares/redirect';
-import { ActionCreator } from './store/action';
+import { requiredAuthorization } from './store/action';
 import { checkAuth, fetchOfferList } from './store/api-actions';
 import App from './components/app';
 import { reducer } from './store/reducer';
@@ -14,7 +14,7 @@ import { AuthorizationStatus } from './const';
 
 const api = createAPI(() =>
   store.dispatch(
-    ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)));
+    requiredAuthorization(AuthorizationStatus.NO_AUTH)));
 const store = createStore(
   reducer,
   composeWithDevTools(

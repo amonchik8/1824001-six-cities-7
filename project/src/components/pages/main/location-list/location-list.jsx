@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes, { string } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { changeCity } from '../../../../store/action';
 import { AppRoute } from '../../../../const';
-import { ActionCreator } from '../../../../store/action';
 
-function LocationList({ locations, city, changeCity }) {
+function LocationList({ locations, city }) {
+  const dispatch = useDispatch();
   return (
     <ul className="locations__list tabs__list">
       {locations.map((item) => (
@@ -13,7 +14,7 @@ function LocationList({ locations, city, changeCity }) {
           <Link
             to={AppRoute.MAIN}
             onClick={() => {
-              changeCity(item);
+              dispatch(changeCity(item));
             }}
             className={
               city === item
@@ -31,7 +32,6 @@ function LocationList({ locations, city, changeCity }) {
 
 LocationList.propTypes = {
   city: PropTypes.string.isRequired,
-  changeCity: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(string).isRequired,
 };
 
@@ -39,11 +39,5 @@ const mapStateToProps = ({ city }) => ({
   city,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  changeCity(city) {
-    dispatch(ActionCreator.changeCity(city));
-  },
-});
-
 export { LocationList };
-export default connect(mapStateToProps, mapDispatchToProps)(LocationList);
+export default connect(mapStateToProps, null)(LocationList);

@@ -2,7 +2,6 @@ import React from 'react-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { ActionCreator } from '../../../store/action';
 import { logout } from '../../../store/api-actions';
 import { Logo } from '../logo';
 
@@ -115,7 +114,7 @@ const mapDispatchToProps = (dispatch) => ({
   signOut() {
     dispatch(logout());
   },
-  loadUserInfo: ActionCreator.loadUserInfo,
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

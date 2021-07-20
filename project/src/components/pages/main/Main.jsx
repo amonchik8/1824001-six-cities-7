@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect  } from 'react-redux';
 import { PlaceClass, SORT_VALUES, Locations } from '../../../const';
 import { offersType } from '../../../types';
-import { fetchOfferList } from '../../../store/api-actions';
 import { sortOffers } from '../../../utils/utils';
 import { PlaceCardList, Map } from '../../common';
 import Header from '../../common/header/header';
 import SortList from './sort-list';
 import LocationList from './location-list';
 
-function Main({ offers, city, changeCity }) {
+function Main({ offers, city }) {
   const { POPULAR } = SORT_VALUES;
   const [sortType, setSortType] = useState(POPULAR);
   const [selectedPoint, setSelectedPoint] = useState({});
@@ -31,10 +30,6 @@ function Main({ offers, city, changeCity }) {
     (offer) => offer.city.name === city);
 
   const handleSortClick = (value) => setSortType(value);
-
-  useEffect(() => {
-    changeCity(offers);
-  }, [changeCity, offers]);
 
   return (
     <>
@@ -109,12 +104,10 @@ const mapStateToProps = ({ offers, city }) => ({
   city,
 });
 
-const mapDispatchToProps = { changeCity: fetchOfferList };
-
 Main.propTypes = {
   city: PropTypes.string.isRequired,
   offers: PropTypes.arrayOf(offersType),
-  changeCity: PropTypes.func.isRequired,
 };
 export { Main };
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, null)(Main);
+
