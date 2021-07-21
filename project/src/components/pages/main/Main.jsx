@@ -8,6 +8,7 @@ import { PlaceCardList, Map } from '../../common';
 import Header from '../../common/header/header';
 import SortList from './sort-list';
 import LocationList from './location-list';
+import MainEmpty from './main-empty/main-empty';
 
 function Main({ offers, city }) {
   const { POPULAR } = SORT_VALUES;
@@ -30,6 +31,10 @@ function Main({ offers, city }) {
     (offer) => offer.city.name === city);
 
   const handleSortClick = (value) => setSortType(value);
+
+  if (!offers.length) {
+    return <MainEmpty city={city} />;
+  }
 
   return (
     <>

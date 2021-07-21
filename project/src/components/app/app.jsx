@@ -14,6 +14,7 @@ import PrivateRoute from '../common/private-route';
 import { LoadingScreen } from '../common';
 
 function App({ authorizationStatus, isDataLoaded }) {
+
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return <LoadingScreen />;
   }
