@@ -18,7 +18,7 @@ function Main({ offers, city }) {
   const [selectedPoint, setSelectedPoint] = useState({});
 
   const offersQuantity = offers?.filter(
-    (item) => item.city.name === city).length;
+    (item) => item.city.name === city ).length;
 
   const onListItemHover = (id) => {
     const currentOffer = offers.find((offer) => offer.id === id);
@@ -30,7 +30,7 @@ function Main({ offers, city }) {
   const sortedOffers = sortOffers(offers, POPULAR);
 
   const sortedByCityOffers = sortedOffers.filter(
-    (offer) => offer.city.name === city);
+    (offer) => offer.city.name === city );
 
   const handleSortClick = (value) => setSortType(value);
 
