@@ -3,6 +3,7 @@ import PropTypes, { string } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import { changeCity } from '../../../../store/action';
+import { getCity } from '../../../../store/process/selectors';
 import { AppRoute } from '../../../../const';
 
 function LocationList({ locations, city }) {
@@ -35,8 +36,8 @@ LocationList.propTypes = {
   locations: PropTypes.arrayOf(string).isRequired,
 };
 
-const mapStateToProps = ({ city }) => ({
-  city,
+const mapStateToProps = (state) => ({
+  city: getCity(state),
 });
 
 export { LocationList };

@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import { AppRoute, PlaceClass } from '../../const';
 import { isCheckedAuth } from '../../utils/utils';
 import browserHisory from '../../browser-history';
+import { getLoadedDataStatus } from '../../store/data/selectors';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+
 import Main from '../pages/main';
 import SignIn from '../pages/sign-in/sign-in';
 import Chosen from '../pages/chosen/chosen';
@@ -49,9 +52,9 @@ App.propTypes = {
   isDataLoaded: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({ authorizationStatus, isDataLoaded }) => ({
-  authorizationStatus,
-  isDataLoaded,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  isDataLoaded: getLoadedDataStatus(state),
 });
 
 export { App };

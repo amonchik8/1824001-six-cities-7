@@ -18,7 +18,7 @@ export const sortOffers = (offersList, sortValue) => {
 };
 
 export const isCheckedAuth = (authorizationStatus) =>
-  authorizationStatus === AuthorizationStatus.UNKNOW;
+  authorizationStatus === AuthorizationStatus.UNKNOWN;
 
 export const adaptToClient = (offer) => {
   const adaptedOffer = {

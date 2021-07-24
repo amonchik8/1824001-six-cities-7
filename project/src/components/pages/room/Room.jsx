@@ -4,6 +4,12 @@ import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { offersType, reviewsType } from '../../../types';
 import { AuthorizationStatus, PlaceClass } from '../../../const';
+import {
+  getOffer,
+  getOffersNearby,
+  getReviews
+} from '../../../store/data/selectors';
+import { getAuthorizationStatus } from '../../../store/user/selectors';
 import PlaceCard from '../../common/place-card-list/place-card';
 import { Map } from '../../common';
 import Header from '../../common/header';
@@ -161,7 +167,13 @@ function Room({
               </div>
             </div>
             <section className="property__map map">
-              {city && <Map city={city} offers={[offer, ...offersNearby]} selectedPoint={offer} />}
+              {city && (
+                <Map
+                  city={city}
+                  offers={[offer, ...offersNearby]}
+                  selectedPoint={offer}
+                />
+              )}
             </section>
           </section>
           <div className="container">
@@ -213,16 +225,11 @@ function Room({
   );
 }
 
-const mapStateToProps = ({
-  offer,
-  offersNearby,
-  reviews,
-  authorizationStatus,
-}) => ({
-  offer,
-  offersNearby,
-  reviews,
-  authorizationStatus,
+const mapStateToProps = (state) => ({
+  offer: getOffer(state),
+  offersNearby: getOffersNearby(state),
+  reviews: getReviews(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = {

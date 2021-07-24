@@ -1,22 +1,27 @@
 import React from 'react-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { logout } from '../../../store/api-actions';
+import {
+  getAuthorizationStatus,
+  getUserInfo
+} from '../../../store/user/selectors';
 import { Logo } from '../logo';
 
 import { AuthorizationStatus, AppRoute } from '../../../const';
 
 export function Header({
   authorizationStatus,
-  signOut,
   email,
   avatarUrl,
-  loadUserInfo,
+  // loadUserInfo,
 }) {
   const handleClick = () => {
-    loadUserInfo({});
+    dispatch(logout());
+    // loadUserInfo({});
   };
+  const dispatch = useDispatch();
 
   return (
     <header className="header">
@@ -53,12 +58,10 @@ export function Header({
                 <li className="header__nav-item">
                   <Link
                     className="header__nav-link"
-                    onClick={() => signOut()}
+                    onClick={() => handleClick()}
                     to={AppRoute.MAIN}
                   >
-                    <span className="header__signout" onClick={handleClick}>
-                      Sign out
-                    </span>
+                    <span className="header__signout">Sign out</span>
                   </Link>
                 </li>
               </ul>
@@ -94,27 +97,15 @@ export function Header({
 }
 
 Header.propTypes = {
-  signOut: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   email: PropTypes.string,
   avatarUrl: PropTypes.string,
-  loadUserInfo: PropTypes.func.isRequired,
+  // loadUserInfo: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({
-  authorizationStatus,
-  user: { email, avatarUrl },
-}) => ({
-  authorizationStatus,
-  email,
-  avatarUrl,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  user: getUserInfo(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  signOut() {
-    dispatch(logout());
-  },
-
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, null)(Header);

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect  } from 'react-redux';
+import { connect } from 'react-redux';
 import { PlaceClass, SORT_VALUES, Locations } from '../../../const';
 import { offersType } from '../../../types';
 import { sortOffers } from '../../../utils/utils';
 import { PlaceCardList, Map } from '../../common';
 import Header from '../../common/header/header';
+import { getOffers } from '../../../store/data/selectors';
+import { getCity } from '../../../store/process/selectors';
 import SortList from './sort-list';
 import LocationList from './location-list';
 import MainEmpty from './main-empty/main-empty';
@@ -104,9 +106,9 @@ function Main({ offers, city }) {
   );
 }
 
-const mapStateToProps = ({ offers, city }) => ({
-  offers,
-  city,
+const mapStateToProps = (state) => ({
+  offers: getOffers(state),
+  city: getCity(state),
 });
 
 Main.propTypes = {
@@ -115,4 +117,3 @@ Main.propTypes = {
 };
 export { Main };
 export default connect(mapStateToProps, null)(Main);
-

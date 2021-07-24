@@ -10,7 +10,7 @@ const initialState = {
   offersNearby: [],
   reviews: [],
   user: {},
-  authorizationStatus: AuthorizationStatus.UNKNOW,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
 };
 
