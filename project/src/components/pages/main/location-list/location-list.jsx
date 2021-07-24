@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes, { string } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { changeCity } from '../../../../store/action';
 import { getCity } from '../../../../store/process/selectors';
 import { AppRoute } from '../../../../const';
 
-function LocationList({ locations, city }) {
+function LocationList({ locations }) {
+  const city = useSelector(getCity);
   const dispatch = useDispatch();
+
   return (
     <ul className="locations__list tabs__list">
       {locations.map((item) => (
@@ -32,13 +34,7 @@ function LocationList({ locations, city }) {
 }
 
 LocationList.propTypes = {
-  city: PropTypes.string.isRequired,
   locations: PropTypes.arrayOf(string).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  city: getCity(state),
-});
-
-export { LocationList };
-export default connect(mapStateToProps, null)(LocationList);
+export default LocationList;

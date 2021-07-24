@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { PlaceClass, SORT_VALUES, Locations } from '../../../const';
-import { offersType } from '../../../types';
 import { sortOffers } from '../../../utils/utils';
 import { PlaceCardList, Map } from '../../common';
 import Header from '../../common/header/header';
@@ -12,7 +10,9 @@ import SortList from './sort-list';
 import LocationList from './location-list';
 import MainEmpty from './main-empty/main-empty';
 
-function Main({ offers, city }) {
+function Main() {
+  const offers = useSelector(getOffers);
+  const city = useSelector(getCity);
   const { POPULAR } = SORT_VALUES;
   const [sortType, setSortType] = useState(POPULAR);
   const [selectedPoint, setSelectedPoint] = useState({});
@@ -37,7 +37,6 @@ function Main({ offers, city }) {
   if (!offers.length) {
     return <MainEmpty city={city} />;
   }
-
   return (
     <>
       <div className="page page--gray page--main">
@@ -106,14 +105,4 @@ function Main({ offers, city }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  offers: getOffers(state),
-  city: getCity(state),
-});
-
-Main.propTypes = {
-  city: PropTypes.string.isRequired,
-  offers: PropTypes.arrayOf(offersType),
-};
-export { Main };
-export default connect(mapStateToProps, null)(Main);
+export default Main;

@@ -1,4 +1,10 @@
-import { ActionType } from '../action';
+import { createReducer } from '@reduxjs/toolkit';
+import {
+  loadOffer,
+  loadOffers,
+  loadOffersNearby,
+  loadReviews
+} from '../action';
 
 const initialState = {
   offer: {},
@@ -8,33 +14,22 @@ const initialState = {
   reviews: [],
 };
 
-const data = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.LOAD_OFFER:
-      return {
-        ...state,
-        offer: action.payload,
-        isDataLoaded: true,
-      };
-    case ActionType.LOAD_OFFERS:
-      return {
-        ...state,
-        offers: action.payload,
-        isDataLoaded: true,
-      };
-    case ActionType.LOAD_OFFERS_NEARBY:
-      return {
-        ...state,
-        offersNearby: action.payload,
-      };
-    case ActionType.LOAD_REVIEWS:
-      return {
-        ...state,
-        reviews: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+const data = createReducer(initialState, (builder) => {
+  builder
+    .addCase(loadOffer, (state, action) => {
+      state.offer = action.payload;
+      state.isDataLoaded = true;
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+      state.isDataLoaded = true;
+    })
+    .addCase(loadOffersNearby, (state, action) => {
+      state.offersNearby = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
+    });
+});
 
 export { data };

@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { offersType, reviewsType } from '../../../types';
 import { AuthorizationStatus, PlaceClass } from '../../../const';
 import {
   getOffer,
@@ -15,23 +14,18 @@ import { Map } from '../../common';
 import Header from '../../common/header';
 import ReviewsList from './reviews-list';
 import Form from './form';
-
 import {
   fetchReviewList,
   fetchOfferNearbyList,
   fetchOffer
 } from '../../../store/api-actions';
 
-function Room({
-  offer,
-  offersNearby,
-  reviews,
-  authorizationStatus,
-  pageType,
-  loadOffer,
-  loadReviewList,
-  loadOfferNearbyList,
-}) {
+function Room({ pageType }) {
+  const offer = useSelector(getOffer);
+  const reviews = useSelector(getReviews);
+  const offersNearby = useSelector(getOffersNearby);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
   const {
     goods,
     images,
@@ -48,12 +42,13 @@ function Room({
     city,
   } = offer;
   const params = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    loadOffer(params.id);
-    loadReviewList(params.id);
-    loadOfferNearbyList(params.id);
-  }, [loadOffer, loadReviewList, loadOfferNearbyList, params.id]);
+    dispatch(fetchOffer(params.id));
+    dispatch(fetchReviewList(params.id));
+    dispatch(fetchOfferNearbyList(params.id));
+  }, [dispatch, params.id]);
 
   return (
     <div>
@@ -225,29 +220,8 @@ function Room({
   );
 }
 
-const mapStateToProps = (state) => ({
-  offer: getOffer(state),
-  offersNearby: getOffersNearby(state),
-  reviews: getReviews(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-const mapDispatchToProps = {
-  loadReviewList: fetchReviewList,
-  loadOfferNearbyList: fetchOfferNearbyList,
-  loadOffer: fetchOffer,
-};
-
 Room.propTypes = {
-  reviews: PropTypes.arrayOf(reviewsType),
-  offer: offersType,
   pageType: PropTypes.string,
-  offersNearby: PropTypes.arrayOf(offersType).isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  loadReviewList: PropTypes.func.isRequired,
-  loadOfferNearbyList: PropTypes.func.isRequired,
-  loadOffer: PropTypes.func.isRequired,
 };
 
-export { Room };
-export default connect(mapStateToProps, mapDispatchToProps)(Room);
+export default Room;

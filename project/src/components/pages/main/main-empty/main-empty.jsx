@@ -1,11 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Locations } from '../../../../const';
+import { getCity } from '../../../../store/process/selectors';
 import Header from '../../../common/header';
 import LocationList from '../location-list';
 
-function MainEmpty({ city }) {
+function MainEmpty() {
+  const city = useSelector(getCity);
+
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -36,13 +38,4 @@ function MainEmpty({ city }) {
   );
 }
 
-MainEmpty.propTypes = {
-  city: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = ({ city }) => ({
-  city,
-});
-
-export { MainEmpty };
-export default connect(mapStateToProps)(MainEmpty);
+export default MainEmpty;
