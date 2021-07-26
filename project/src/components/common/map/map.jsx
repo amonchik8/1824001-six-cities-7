@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -73,4 +73,4 @@ Map.propTypes = {
   }).isRequired,
 };
 
-export default Map;
+export default memo(Map);
