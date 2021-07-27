@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import useMap from '../../../hooks/useMap';
+import useMap from '../../../hooks/use-map';
 import { offersType } from '../../../types';
 
 const iconDefault = leaflet.icon({
@@ -73,4 +73,4 @@ Map.propTypes = {
   }).isRequired,
 };
 
-export default Map;
+export default memo(Map);

@@ -6,11 +6,10 @@ import { sortOffers } from '../../../utils/utils';
 import { fetchOfferList } from '../../../store/api-actions';
 import { PlaceClass } from '../../../const';
 import { offersType } from '../../../types';
-import {Logo, PlaceCardList} from '../../common';
+import { Logo, PlaceCardList } from '../../common';
 import Header from '../../common/header';
 
 function Chosen({ offers, changeCity }) {
-
   useEffect(() => {
     changeCity(offers);
   }, [changeCity, offers]);

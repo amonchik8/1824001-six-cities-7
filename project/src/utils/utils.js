@@ -2,16 +2,13 @@ import { AuthorizationStatus, SORT_VALUES } from '../const';
 const { TOP_RATED_FIRST, PRICE_TO_HIGH, PRICE_TO_LOW } = SORT_VALUES;
 
 export const sortOffers = (offersList, sortValue) => {
-  const sortedByPrice = offersList?.sort(
-    (firstOffer, secondOffer) => secondOffer.price - firstOffer.price);
   switch (sortValue) {
     case PRICE_TO_LOW:
-      return sortedByPrice;
+      return offersList.slice().sort((a, b) => b.price - a.price);
     case PRICE_TO_HIGH:
-      return sortedByPrice.reverse();
+      return offersList.slice().sort((a, b) => a.price - b.price);
     case TOP_RATED_FIRST:
-      return offersList.sort(
-        (firstOffer, secondOffer) => secondOffer.rating - firstOffer.rating);
+      return  offersList.slice().sort((a, b) => b.rating - a.rating);
     default:
       return offersList;
   }

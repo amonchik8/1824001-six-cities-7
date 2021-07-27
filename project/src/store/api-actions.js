@@ -1,38 +1,43 @@
-import { ActionCreator } from './action';
+import {
+  loadOffer,
+  redirectToRoute,
+  loadOffers,
+  loadOffersNearby,
+  loadReviews,
+  requiredAuthorization,
+  loadUserInfo
+} from './action';
 import { AuthorizationStatus, APIRoute, AppRoute } from '../const';
 import { adaptToClient, adaptUserInfo, adaptReview } from '../utils/utils';
 
-export const fetchOffer = (id) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.OFFERS}/${id}`)
-    .then(({data}) => dispatch(ActionCreator.loadOffer(adaptToClient(data))))
-    .catch(() => dispatch(ActionCreator.redirectToRoute(AppRoute.NOT_FOUND)))
-);
+export const fetchOffer = (id) => (dispatch, _getState, api) =>
+  api
+    .get(`${APIRoute.OFFERS}/${id}`)
+    .then(({ data }) => dispatch(loadOffer(adaptToClient(data))))
+    .catch(() => dispatch(redirectToRoute(AppRoute.NOT_FOUND)));
 
-export const fetchOfferList = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.OFFERS)
-    .then(({ data }) => {
-      dispatch(ActionCreator.loadOffers(data.map(adaptToClient)));
-    })
-);
+export const fetchOfferList = () => (dispatch, _getState, api) =>
+  api.get(APIRoute.OFFERS).then(({ data }) => {
+    dispatch(loadOffers(data.map(adaptToClient)));
+  });
 
-export const fetchOfferNearbyList = (id) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.OFFERS}/${id}${APIRoute.OFFERS_NEARBY}`)
+export const fetchOfferNearbyList = (id) => (dispatch, _getState, api) =>
+  api
+    .get(`${APIRoute.OFFERS}/${id}${APIRoute.OFFERS_NEARBY}`)
     .then(({ data }) => {
-      dispatch(ActionCreator.loadOffersNearby(data.map(adaptToClient)));
-    })
-);
+      dispatch(loadOffersNearby(data.map(adaptToClient)));
+    });
 
 export const fetchReviewList = (id) => (dispatch, _getState, api) =>
   api.get(`${APIRoute.REVIEWS}/${id}`).then(({ data }) => {
-    dispatch(ActionCreator.loadReviews(data.map((item) => adaptReview(item))));
+    dispatch(loadReviews(data.map((item) => adaptReview(item))));
   });
 
 export const checkAuth = () => (dispatch, _getState, api) =>
   api
     .get(APIRoute.LOGIN)
-    .then(() =>
-      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => {});
+    .then(() => dispatch(requiredAuthorization(AuthorizationStatus.AUTH)))
+    .catch(() => dispatch(requiredAuthorization(AuthorizationStatus.NO_AUTH)));
 
 export const login =
   ({ login: email, password }) =>
@@ -41,17 +46,17 @@ export const login =
         .post(APIRoute.LOGIN, { email, password })
         .then(({ data }) => {
           localStorage.setItem('token', data.token);
-          dispatch(ActionCreator.loadUserInfo(adaptUserInfo(data)));
+          dispatch(loadUserInfo(adaptUserInfo(data)));
         })
-        .then(() =>
-          dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH)))
-        .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)));
+        .then(() => dispatch(requiredAuthorization(AuthorizationStatus.AUTH)))
+        .then(() => dispatch(redirectToRoute(AppRoute.MAIN)));
 
 export const logout = () => (dispatch, _getState, api) =>
   api
     .delete(APIRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
-    .then(() => dispatch(ActionCreator.logout()));
+    .then(() => dispatch(logout()))
+    .then(() => dispatch(redirectToRoute(AppRoute.MAIN)));
 
 export const sendReview =
   ({ comment, rating, id }) =>
@@ -59,5 +64,5 @@ export const sendReview =
       api
         .post(`${APIRoute.REVIEWS}/${id}`, { comment, rating })
         .then(({ data }) => {
-          dispatch(ActionCreator.loadReviews(data.map(adaptReview)));
+          dispatch(loadReviews(data.map(adaptReview)));
         });

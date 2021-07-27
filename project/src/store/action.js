@@ -1,3 +1,5 @@
+import { createAction } from '@reduxjs/toolkit';
+
 export const ActionType = {
   CHANGE_CITY: 'main/changeCity',
   LOAD_OFFER: 'data/loadOffer',
@@ -10,40 +12,36 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: 'main/redirectToRoute',
 };
 
-export const ActionCreator = {
-  changeCity: (city) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: city,
-  }),
-  loadOffer: (offer) => ({
-    type: ActionType.LOAD_OFFER,
-    payload: offer,
-  }),
-  loadOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
-    payload: offers,
-  }),
-  loadOffersNearby: (offers) => ({
-    type: ActionType.LOAD_OFFERS_NEARBY,
-    payload: offers,
-  }),
-  loadReviews: (reviews) => ({
-    type: ActionType.LOAD_REVIEWS,
-    payload: reviews,
-  }),
-  requiredAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    status,
-  }),
-  loadUserInfo: (userInfo) => ({
-    type: ActionType.LOAD_USER_INFO,
-    payload: userInfo,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
-};
+export const changeCity = createAction(ActionType.CHANGE_CITY, (payload) => ({
+  payload,
+}));
+
+export const loadOffers = createAction(ActionType.LOAD_OFFERS, (payload) => ({
+  payload,
+}));
+
+export const loadOffer = createAction(ActionType.LOAD_OFFER, (payload) => ({
+  payload,
+}));
+
+export const loadOffersNearby = createAction(
+  ActionType.LOAD_OFFERS_NEARBY,
+  (payload) => ({ payload }));
+
+export const loadReviews = createAction(ActionType.LOAD_REVIEWS, (payload) => ({
+  payload,
+}));
+
+export const requiredAuthorization = createAction(
+  ActionType.REQUIRED_AUTHORIZATION,
+  (payload) => ({ payload }));
+
+export const loadUserInfo = createAction(
+  ActionType.LOAD_USER_INFO,
+  (payload) => ({ payload }));
+
+export const logout = createAction(ActionType.LOGOUT);
+
+export const redirectToRoute = createAction(
+  ActionType.REDIRECT_TO_ROUTE,
+  (payload) => ({ payload }));

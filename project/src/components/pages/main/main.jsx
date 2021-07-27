@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { PlaceClass, SORT_VALUES, Locations } from '../../../const';
-import { offersType } from '../../../types';
-import { fetchOfferList } from '../../../store/api-actions';
 import { sortOffers } from '../../../utils/utils';
 import { PlaceCardList, Map } from '../../common';
-import Header from '../../common/header/Header';
+import Header from '../../common/header/header';
+import { getOffers } from '../../../store/data/selectors';
+import { getCity } from '../../../store/process/selectors';
 import SortList from './sort-list';
 import LocationList from './location-list';
+import MainEmpty from './main-empty/main-empty';
 
-function Main({ offers, city, changeCity }) {
+function Main() {
+  const offers = useSelector(getOffers);
+  const city = useSelector(getCity);
   const { POPULAR } = SORT_VALUES;
   const [sortType, setSortType] = useState(POPULAR);
   const [selectedPoint, setSelectedPoint] = useState({});
@@ -32,10 +34,9 @@ function Main({ offers, city, changeCity }) {
 
   const handleSortClick = (value) => setSortType(value);
 
-  useEffect(() => {
-    changeCity(offers);
-  }, [changeCity, offers]);
-
+  if (!offers.length) {
+    return <MainEmpty city={city} />;
+  }
   return (
     <>
       <div className="page page--gray page--main">
@@ -104,17 +105,4 @@ function Main({ offers, city, changeCity }) {
   );
 }
 
-const mapStateToProps = ({ offers, city }) => ({
-  offers,
-  city,
-});
-
-const mapDispatchToProps = { changeCity: fetchOfferList };
-
-Main.propTypes = {
-  city: PropTypes.string.isRequired,
-  offers: PropTypes.arrayOf(offersType),
-  changeCity: PropTypes.func.isRequired,
-};
-export { Main };
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default Main;

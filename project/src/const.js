@@ -53,7 +53,7 @@ export const SORT_VALUES = {
 export const AuthorizationStatus = {
   AUTH: 'AUTH',
   NO_AUTH: 'NO_AUTH',
-  UNKNOW: 'UNKNOW',
+  UNKNOWN: 'UNKNOWN',
 };
 
 export const APIRoute = {
