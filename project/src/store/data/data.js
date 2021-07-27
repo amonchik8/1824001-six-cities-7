@@ -3,7 +3,9 @@ import {
   loadOffer,
   loadOffers,
   loadOffersNearby,
-  loadReviews
+  loadReviews,
+  loadFavorites,
+  updateFavorites
 } from '../action';
 
 const initialState = {
@@ -29,6 +31,18 @@ const data = createReducer(initialState, (builder) => {
     })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
+    })
+    .addCase(loadFavorites, (state, action) => {
+      state.favorites = action.payload;
+    })
+    .addCase(updateFavorites, (state, action) => {
+      const updatedOffer = action.payload;
+      const idx = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
+      state.offers = [
+        ...state.offers.slice(0, idx),
+        updatedOffer,
+        ...state.offers.slice(idx + 1),
+      ];
     });
 });
 

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { AppRoute } from '../../../../const';
 import { Logo } from '../../logo';
 
-function HeaderSignOut({ email, avatarUrl, logoutApp }) {
+function HeaderSignOut({ userEmail, avatarUrl, logoutApp }) {
   const dispatch = useDispatch();
 
   return (
@@ -33,7 +33,7 @@ function HeaderSignOut({ email, avatarUrl, logoutApp }) {
                     alt={'user'}
                   />
                 </div>
-                <span className="header__user-name user__name">{email}</span>
+                <span className="header__user-name user__name">{userEmail}</span>
               </Link>
             </li>
             <li className="header__nav-item">
@@ -55,7 +55,7 @@ function HeaderSignOut({ email, avatarUrl, logoutApp }) {
 }
 
 HeaderSignOut.propTypes = {
-  email: PropTypes.string,
+  userEmail: PropTypes.string,
   avatarUrl: PropTypes.string,
   logoutApp: PropTypes.func.isRequired,
 };

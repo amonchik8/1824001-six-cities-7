@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { offersType } from '../../../../types';
 import { placeCardClass } from '../../../../const';
+import { sendFavoriteOffer } from '../../../../store/api-actions';
 
 function PlaceCard({
   title,
@@ -15,6 +17,7 @@ function PlaceCard({
   isFavorite,
   listItemHoverHandler = () => {},
 }) {
+  const dispatch = useDispatch();
   return (
     <article
       className={placeCardClass[placeClass].className}
@@ -50,6 +53,10 @@ function PlaceCard({
             className={`place-card__bookmark-button button ${
               isFavorite ? ' place-card__bookmark-button--active' : ''
             }`}
+            onClick={() => {
+              const newFavoriteState = isFavorite ? '0' : '1';
+              dispatch(sendFavoriteOffer(id, newFavoriteState));
+            }}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

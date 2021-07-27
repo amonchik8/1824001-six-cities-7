@@ -1,19 +1,24 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { sortOffers } from '../../../utils/utils';
-import { fetchOfferList } from '../../../store/api-actions';
-import { PlaceClass } from '../../../const';
-import { offersType } from '../../../types';
+import { PlaceClass, Locations } from '../../../const';
+import { getFavorites } from '../../../store/data/selectors';
+import { fetchFavoriteList } from '../../../store/api-actions';
 import { Logo, PlaceCardList } from '../../common';
 import Header from '../../common/header';
+import ChosenEmpty from './chosen-empty';
 
-function Chosen({ offers, changeCity }) {
+function Chosen() {
+  const favoritesOffers = useSelector(getFavorites);
+  const dispatch = useDispatch();
   useEffect(() => {
-    changeCity(offers);
-  }, [changeCity, offers]);
+    dispatch(fetchFavoriteList());
+  }, [dispatch]);
 
+  if (!favoritesOffers.length) {
+    return <ChosenEmpty />;
+  }
   return (
     <div>
       <div className="page">
@@ -23,40 +28,25 @@ function Chosen({ offers, changeCity }) {
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
-                <li className="favorites__locations-items">
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="/#">
-                        <span>Amsterdam</span>
-                      </a>
+                {(Object.values(Locations) || []).map((city) => (
+                  <li className="favorites__locations-items" key={city}>
+                    <div className="favorites__locations locations locations--current">
+                      <div className="locations__item">
+                        <Link className="locations__item-link" to="/">
+                          <span>{city}</span>
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                  <div className="favorites__places">
-                    <PlaceCardList
-                      city="Amsterdam"
-                      offers={offers}
-                      type={PlaceClass.FAVORITES}
-                      sortOffers={sortOffers}
-                    />
-                  </div>
-                </li>
-                <li className="favorites__locations-items">
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="/#">
-                        <span>Cologne</span>
-                      </a>
+                    <div className="favorites__places">
+                      <PlaceCardList
+                        city={city}
+                        offers={favoritesOffers}
+                        type={PlaceClass.FAVORITES}
+                        sortOffers={sortOffers}
+                      />
                     </div>
-                  </div>
-                  <div className="favorites__places">
-                    <PlaceCardList
-                      city="Cologne"
-                      offers={offers}
-                      type={PlaceClass.FAVORITES}
-                      sortOffers={sortOffers}
-                    />
-                  </div>
-                </li>
+                  </li>
+                ))}
               </ul>
             </section>
           </div>
@@ -91,15 +81,5 @@ function Chosen({ offers, changeCity }) {
     </div>
   );
 }
-const mapStateToProps = (state) => ({
-  offers: state.offers,
-});
 
-const mapDispatchToProps = { changeCity: fetchOfferList };
-
-Chosen.propTypes = {
-  offers: PropTypes.arrayOf(offersType),
-  changeCity: PropTypes.func.isRequired,
-};
-export { Chosen };
-export default connect(mapStateToProps, mapDispatchToProps)(Chosen);
+export default Chosen;

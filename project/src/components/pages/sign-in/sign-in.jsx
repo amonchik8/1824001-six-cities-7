@@ -1,22 +1,23 @@
 import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AppRoute } from '../../../const';
 import { login } from '../../../store/api-actions';
 import Header from '../../common/header';
 
-function SignIn({ onSubmit }) {
-  const emailRef = useRef(null);
+function SignIn() {
+  const loginRef = useRef(null);
   const passwordRef = useRef(null);
+  const dispatch = useDispatch();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
-      login: emailRef.current.value,
-      password: passwordRef.current.value,
-    });
+    dispatch(
+      login({
+        login: loginRef.current.value,
+        password: passwordRef.current.value.trim(),
+      }));
   };
   return (
     <div>
@@ -35,7 +36,7 @@ function SignIn({ onSubmit }) {
                 <div className="login__input-wrapper form__input-wrapper">
                   <label className="visually-hidden">E-mail</label>
                   <input
-                    ref={emailRef}
+                    ref={loginRef}
                     className="login__input form__input"
                     type="email"
                     name="email"
@@ -97,13 +98,4 @@ function SignIn({ onSubmit }) {
   );
 }
 
-SignIn.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = {
-  onSubmit: login,
-};
-
-export { SignIn };
-export default connect(null, mapDispatchToProps)(SignIn);
+export default SignIn;

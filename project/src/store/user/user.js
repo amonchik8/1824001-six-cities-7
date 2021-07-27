@@ -1,10 +1,16 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { requiredAuthorization, loadUserInfo, logout } from '../action';
+import { requiredAuthorization, loadUserInfo, signOut } from '../action';
 import { AuthorizationStatus } from '../../const';
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
-  user: {},
+  user: {
+    avatarUrl: '',
+    email: '',
+    id: null,
+    isPro: false,
+    name: '',
+  },
 };
 
 const user = createReducer(initialState, (builder) => {
@@ -13,10 +19,22 @@ const user = createReducer(initialState, (builder) => {
       state.authorizationStatus = action.payload;
     })
     .addCase(loadUserInfo, (state, action) => {
-      state.user = action.payload;
+      state.user = {
+        avatarUrl: action.payload.avatarUrl,
+        email: action.payload.email,
+        id: action.payload.id,
+        isPro: action.payload.isPro,
+        name: action.payload.name,
+      };
     })
-    .addCase(logout, (state) => {
-      state.user = {};
+    .addCase(signOut, (state, action) => {
+      state.user = {
+        avatarUrl: '',
+        email: '',
+        id: null,
+        isPro: false,
+        name: '',
+      };
       state.authorizationStatus = AuthorizationStatus.NO_AUTH;
     });
 });
