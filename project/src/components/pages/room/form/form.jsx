@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchReviewList, sendReview } from '../../../../store/api-actions';
+import { MIN_SYMBOL_COUNT, MAX_SYMBOL_COUNT } from '../../../../const';
 import Rating from './rating';
-const MIN_SYMBOL_COUNT = 50;
 
 function Form({ submit, id, loadReviewList }) {
   const [review, setReview] = useState({
@@ -41,6 +41,7 @@ function Form({ submit, id, loadReviewList }) {
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
+        maxLength={MAX_SYMBOL_COUNT}
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleChange}
