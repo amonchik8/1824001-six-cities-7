@@ -2,13 +2,14 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { AuthorizationStatus, PlaceClass } from '../../../const';
+import { AuthorizationStatus, PlaceClass, AppRoute } from '../../../const';
 import {
   getOffer,
   getOffersNearby,
   getReviews
 } from '../../../store/data/selectors';
 import { getAuthorizationStatus } from '../../../store/user/selectors';
+import { redirectToRoute } from '../../../store/action';
 import PlaceCard from '../../common/place-card-list/place-card';
 import { Map } from '../../common';
 import Header from '../../common/header';
@@ -17,7 +18,8 @@ import Form from './form';
 import {
   fetchReviewList,
   fetchOfferNearbyList,
-  fetchOffer
+  fetchOffer,
+  sendFavoriteOffer
 } from '../../../store/api-actions';
 
 function Room({ pageType }) {
@@ -40,9 +42,16 @@ function Room({ pageType }) {
     price,
     host,
     city,
+    id,
   } = offer;
   const params = useParams();
   const dispatch = useDispatch();
+
+  const handleButtonClick = () => {
+    dispatch(sendFavoriteOffer(id, status));
+  };
+
+  const status = isFavorite ? '0' : '1';
 
   useEffect(() => {
     dispatch(fetchOffer(params.id));
@@ -58,7 +67,7 @@ function Room({ pageType }) {
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                {images?.map((item) => (
+                {images?.slice(0, 6).map((item) => (
                   <div key={item} className="property__image-wrapper">
                     <img className="property__image" src={item} alt="Offer" />
                   </div>
@@ -77,13 +86,18 @@ function Room({ pageType }) {
                   <button
                     className="property__bookmark-button button"
                     type="button"
+                    onClick={
+                      authorizationStatus === AuthorizationStatus.AUTH
+                        ? handleButtonClick
+                        : () => dispatch(redirectToRoute(AppRoute.SIGN_IN))
+                    }
                   >
                     <svg
                       className="property__bookmark-icon"
                       width="31"
                       height="33"
                       style={{
-                        fill: `${isFavorite && '#4481c3'}`,
+                        fill: `${isFavorite ? '#4481c3' : '#0000' }`,
                         stroke: `${isFavorite ? '#4481c3' : '#979797'}`,
                       }}
                     >
