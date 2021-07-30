@@ -62,4 +62,8 @@ export const APIRoute = {
   REVIEWS: '/comments',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  FAVORITES: '/favorite',
 };
+export const TOKEN = 'token';
+export const MIN_SYMBOL_COUNT = 50;
+export const MAX_SYMBOL_COUNT = 300;

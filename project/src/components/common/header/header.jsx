@@ -3,21 +3,26 @@ import { useSelector } from 'react-redux';
 import { logout } from '../../../store/api-actions';
 import {
   getAuthorizationStatus,
-  loadUserInfo
+  getUserEmail,
+  getUserAvatar
 } from '../../../store/user/selectors';
 import { AuthorizationStatus } from '../../../const';
 import HeaderSignOut from './sign-out';
 import HeaderSignIn from './sign-in';
 
 function Header() {
-  const username = useSelector(loadUserInfo);
+  const userEmail = useSelector(getUserEmail);
+  const avatarUrl = useSelector(getUserAvatar);
   const authorizationStatus = useSelector(getAuthorizationStatus);
-  const { email, avatarUrl } = username;
 
   return (
     <header className="header">
       {(authorizationStatus === AuthorizationStatus.AUTH && (
-        <HeaderSignOut email={email} avatarUrl={avatarUrl} logoutApp={logout} />
+        <HeaderSignOut
+          logoutApp={logout}
+          userEmail={userEmail}
+          avatarUrl={avatarUrl}
+        />
       )) || <HeaderSignIn />}
     </header>
   );

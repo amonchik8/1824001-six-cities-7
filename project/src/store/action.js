@@ -8,8 +8,10 @@ export const ActionType = {
   LOAD_REVIEWS: 'reviews/loadReviews',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOAD_USER_INFO: 'user/loadUserInfo',
-  LOGOUT: 'user/logout',
+  SIGNOUT: 'user/signOut',
   REDIRECT_TO_ROUTE: 'main/redirectToRoute',
+  LOAD_FAVORITES: 'data/loadFavorites',
+  UPDATE_FAVORITES: 'data/updateFavorites',
 };
 
 export const changeCity = createAction(ActionType.CHANGE_CITY, (payload) => ({
@@ -40,8 +42,16 @@ export const loadUserInfo = createAction(
   ActionType.LOAD_USER_INFO,
   (payload) => ({ payload }));
 
-export const logout = createAction(ActionType.LOGOUT);
+export const signOut = createAction(ActionType.SIGNOUT);
 
 export const redirectToRoute = createAction(
   ActionType.REDIRECT_TO_ROUTE,
   (payload) => ({ payload }));
+
+export const loadFavorites = createAction(ActionType.LOAD_FAVORITES, (payload) => ({
+  payload,
+}));
+
+export const updateFavorites = createAction(ActionType.UPDATE_FAVORITES, (payload) => ({
+  payload,
+}));
